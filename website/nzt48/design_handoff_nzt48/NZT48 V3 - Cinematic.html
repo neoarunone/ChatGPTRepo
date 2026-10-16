@@ -98,7 +98,7 @@ header .logo{height:22px;width:auto;filter:invert(1) brightness(1.4)}
 .use h3{position:sticky;top:30vh;margin:0;align-self:start;font-size:clamp(34px,4.2vw,72px);color:var(--text)}
 .use h3 small{display:block;font:600 12px/1.4 Inter;letter-spacing:.18em;color:var(--gold);margin-bottom:12px;text-transform:uppercase}
 .use .media{position:relative;height:84vh;border-radius:14px;overflow:hidden;background:var(--panel)}
-.use video{width:100%;height:100%;object-fit:cover;filter:grayscale(.3) brightness(.62) contrast(1.08);transform:scale(1.15)}
+.use .media>img{width:100%;height:100%;object-fit:cover;filter:grayscale(.3) brightness(.62) contrast(1.08);transform:scale(1.15)}
 .use .mini{position:absolute;left:8%;top:50%;transform:translateY(-50%);height:50%;width:auto;max-width:60%;aspect-ratio:3/4;border-radius:16px;background:rgba(28,25,21,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:16px;padding:clamp(18px,2vw,32px)}
 .use .mini img{flex:1;min-height:0;height:auto;max-height:78%;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 24px 26px rgba(0,0,0,.6))}
 .use .mini .shop{height:52px}
@@ -116,8 +116,8 @@ header .logo{height:22px;width:auto;filter:invert(1) brightness(1.4)}
 .vgrid>div{border-right:1px solid var(--line);border-bottom:1px solid var(--line);aspect-ratio:1.35/1;display:grid;place-items:center;padding:clamp(14px,2vw,28px);position:relative}
 .vgrid .word{font-size:clamp(18px,1.9vw,32px);color:var(--gold)}
 .vgrid .vid{width:100%;height:100%;border-radius:8px;overflow:hidden;position:relative}
-.vgrid video{width:100%;height:100%;object-fit:cover;filter:grayscale(.25) brightness(.75);transition:transform .9s cubic-bezier(.16,1,.3,1),filter .4s}
-.vgrid .vid:hover video{transform:scale(1.06);filter:none}
+.vgrid .vid img{width:100%;height:100%;object-fit:cover;filter:grayscale(.25) brightness(.75);transition:transform .9s cubic-bezier(.16,1,.3,1),filter .4s}
+.vgrid .vid:hover img{transform:scale(1.06);filter:none}
 .vgrid .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:30px;border-radius:8px;background:var(--gold);display:grid;place-items:center;color:var(--bg)}
 
 /* Final */
@@ -241,20 +241,20 @@ footer .wm{width:180px;height:auto;margin-bottom:16px}
   <section class="uses" id="uses" data-section="uses">
     <div class="use" data-sc="Deep Work">
       <h3 class="bebas"><small>Developers · writers · analysts</small>Pre-Work</h3>
-      <div class="media"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/4754030/4754030-hd_1366_720_25fps.mp4"></video>
-        <div class="mini"><img src="assets/bottle.png" alt="NZT48 Original"><button class="shop" data-cart="30"><span>Shop now</span><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button></div>
+      <div class="media"><img src="assets/photos/m-reading.webp" alt="Man reading with NZT48 Original beside him" loading="lazy">
+        <div class="mini"><img src="assets/photos/size-30.webp" alt="NZT48 Original"><button class="shop" data-cart="30"><span>Shop now</span><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button></div>
         <p class="text" data-d></p></div>
     </div>
     <div class="use" data-sc="Study Sessions">
       <h3 class="bebas"><small>Adult students</small>Pre-Study</h3>
-      <div class="media"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/4109368/4109368-hd_1280_720_50fps.mp4"></video>
-        <div class="mini"><img src="assets/bottle.png" alt="NZT48 Original"><button class="shop" data-cart="60"><span>Shop now</span><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button></div>
+      <div class="media"><img src="assets/photos/m-training.webp" alt="Headphones, gym kit and NZT48 Original laid out" loading="lazy">
+        <div class="mini"><img src="assets/photos/size-30.webp" alt="NZT48 Original"><button class="shop" data-cart="60"><span>Shop now</span><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button></div>
         <p class="text" data-d></p></div>
     </div>
     <div class="use" data-sc="Competitive Play">
       <h3 class="bebas"><small>Gamers, 18+</small>Pre-Game</h3>
-      <div class="media"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/4745730/4745730-hd_1280_720_25fps.mp4"></video>
-        <div class="mini"><img src="assets/bottle.png" alt="NZT48 Original"><button class="shop" data-cart="90"><span>Shop now</span><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button></div>
+      <div class="media"><img src="assets/photos/m-match.webp" alt="Lacing up before the match with NZT48 Original" loading="lazy">
+        <div class="mini"><img src="assets/photos/size-30.webp" alt="NZT48 Original"><button class="shop" data-cart="90"><span>Shop now</span><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></button></div>
         <p class="text" data-d></p></div>
     </div>
   </section>
@@ -272,14 +272,14 @@ footer .wm{width:180px;height:auto;margin-bottom:16px}
     <h2 class="grid-h bebas">Find your focus routine before the day finds you.</h2>
     <div class="vgrid">
       <div><span class="word bebas">Drive</span></div>
-      <div><div class="vid"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/4754032/4754032-sd_960_506_25fps.mp4"></video><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span></div></div>
-      <div><div class="vid"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/6115853/6115853-sd_960_540_25fps.mp4"></video><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span></div></div>
-      <div><div class="vid"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/11652770/11652770-sd_960_540_24fps.mp4"></video><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span></div></div>
-      <div><div class="vid"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/4859765/4859765-hd_1280_720_25fps.mp4"></video><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span></div></div>
+      <div><div class="vid"><img src="assets/photos/m-pushup.webp" alt="Push-up focus with NZT48 Original" loading="lazy"></div></div>
+      <div><div class="vid"><img src="assets/photos/m-weights.webp" alt="Weight room still life with NZT48 Original" loading="lazy"></div></div>
+      <div><div class="vid"><img src="assets/photos/m-gymbag.webp" alt="NZT48 Original packed in a gym bag" loading="lazy"></div></div>
+      <div><div class="vid"><img src="assets/photos/m-catch.webp" alt="Mid-air catch of a bottle of NZT48 Original" loading="lazy"></div></div>
       <div><span class="word bebas">Discipline</span></div>
-      <div><div class="vid"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/4109368/4109368-sd_960_540_25fps.mp4"></video><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span></div></div>
+      <div><div class="vid"><img src="assets/photos/m-pack.webp" alt="Packing NZT48 Original to go" loading="lazy"></div></div>
       <div><span class="word bebas">Limitless</span></div>
-      <div><div class="vid"><video muted loop playsinline preload="none" data-src="https://videos.pexels.com/video-files/4754030/4754030-sd_960_506_25fps.mp4"></video><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span></div></div>
+      <div><div class="vid"><img src="assets/photos/m-pause.webp" alt="A pause between sets with NZT48 Original" loading="lazy"></div></div>
     </div>
   </section>
 
@@ -368,7 +368,7 @@ const D = window.NZT48 && NZT48.D;
 document.querySelectorAll('.use').forEach(u => {
   const sc = D && D.scenarios.find(x => x.t === u.dataset.sc);
   if (sc) u.querySelector('[data-d]').textContent = sc.d;
-  gsap.fromTo(u.querySelector('video'), { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: u, start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.fromTo(u.querySelector('.media>img'), { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: u, start: 'top bottom', end: 'bottom top', scrub: true } });
 });
 if (D) { document.getElementById('fda').textContent = D.fda; document.getElementById('warn').textContent = 'Warning: ' + D.warning; }
 

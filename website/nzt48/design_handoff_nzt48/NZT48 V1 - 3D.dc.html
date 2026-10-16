@@ -245,17 +245,17 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid #F4C
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(32px,4vw,56px)">
         <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
-          <span style="font-family:Boldonse,Poppins,sans-serif;font-size:64px;line-height:1.3;background:linear-gradient(180deg,#F4C430,rgba(244,196,48,.15));-webkit-background-clip:text;background-clip:text;color:transparent;padding:.08em .06em .14em;display:inline-block">01</span>
+          <div style="position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#111"><img src="assets/photos/p-capsules.webp" alt="Two gold NZT48 capsules" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.05)"><span style="position:absolute;left:18px;bottom:12px;font-family:Boldonse,Poppins,sans-serif;font-size:44px;line-height:1.3;color:#F4C430;text-shadow:0 6px 20px rgba(0,0,0,.5)">01</span></div>
           <h3 style="margin:0;font:700 22px/1.25 Poppins,sans-serif">Take one capsule</h3>
           <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#B9BBC0">With 8oz of water, preferably with a meal, or as directed by a healthcare professional.</p>
         </div>
         <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
-          <span style="font-family:Boldonse,Poppins,sans-serif;font-size:64px;line-height:1.3;background:linear-gradient(180deg,#F4C430,rgba(244,196,48,.15));-webkit-background-clip:text;background-clip:text;color:transparent;padding:.08em .06em .14em;display:inline-block">02</span>
+          <div style="position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#111"><img src="assets/photos/p-topdown.webp" alt="NZT48 Original with water, seen from above" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.05)"><span style="position:absolute;left:18px;bottom:12px;font-family:Boldonse,Poppins,sans-serif;font-size:44px;line-height:1.3;color:#F4C430;text-shadow:0 6px 20px rgba(0,0,0,.5)">02</span></div>
           <h3 style="margin:0;font:700 22px/1.25 Poppins,sans-serif">Skip the extra caffeine</h3>
           <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#B9BBC0">NZT48 Original already contains caffeine. The label says to avoid other caffeinated products, including coffee and energy drinks.</p>
         </div>
         <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
-          <span style="font-family:Boldonse,Poppins,sans-serif;font-size:64px;line-height:1.3;background:linear-gradient(180deg,#F4C430,rgba(244,196,48,.15));-webkit-background-clip:text;background-clip:text;color:transparent;padding:.08em .06em .14em;display:inline-block">03</span>
+          <div style="position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#111"><img src="assets/photos/r-sunlit.webp" alt="Morning light routine with NZT48 Original" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.05)"><span style="position:absolute;left:18px;bottom:12px;font-family:Boldonse,Poppins,sans-serif;font-size:44px;line-height:1.3;color:#F4C430;text-shadow:0 6px 20px rgba(0,0,0,.5)">03</span></div>
           <h3 style="margin:0;font:700 22px/1.25 Poppins,sans-serif">Take it earlier in the day</h3>
           <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#B9BBC0">Most people take it in the morning or with lunch, so the caffeine fits their day and their sleep.</p>
         </div>
@@ -274,10 +274,11 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid #F4C
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px">
         <sc-for list="{{ scenarios }}" as="u" hint-placeholder-count="8">
-          <div style="display:flex;flex-direction:column;gap:12px;min-height:200px;padding:26px;border-radius:24px;background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.015));transition:transform .35s cubic-bezier(.2,.7,.2,1),background .35s" style-hover="transform:translateY(-4px);background:linear-gradient(160deg,rgba(244,196,48,.14),rgba(255,255,255,.02))">
-            <span style="font:500 13px/1.3 Poppins,sans-serif;color:#F4C430">{{ u.who }}</span>
-            <h3 style="margin:auto 0 0;font:700 21px/1.25 Poppins,sans-serif;color:#F3F1EC">{{ u.t }}</h3>
-            <p style="margin:0;font:400 15px/1.55 Poppins,sans-serif;color:#B9BBC0">{{ u.d }}</p>
+          <div style="display:flex;flex-direction:column;gap:12px;min-height:200px;padding:0 0 26px;overflow:hidden;border-radius:24px;background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.015));transition:transform .35s cubic-bezier(.2,.7,.2,1),background .35s" style-hover="transform:translateY(-4px);background:linear-gradient(160deg,rgba(244,196,48,.14),rgba(255,255,255,.02))">
+            <img src="{{ u.image }}" alt="" loading="lazy" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(.88)">
+            <span style="font:500 13px/1.3 Poppins,sans-serif;color:#F4C430;padding:8px 26px 0">{{ u.who }}</span>
+            <h3 style="margin:0;padding:0 26px;font:700 21px/1.25 Poppins,sans-serif;color:#F3F1EC">{{ u.t }}</h3>
+            <p style="margin:0;padding:0 26px;font:400 15px/1.55 Poppins,sans-serif;color:#B9BBC0">{{ u.d }}</p>
           </div>
         </sc-for>
       </div>
@@ -584,6 +585,8 @@ class Component extends DCLogic {
       s.packshot = 'assets/nzt48-studio-' + count + '-bottle.webp';
       s.packshotAlt = count + (count === 1 ? ' NZT48 bottle' : ' NZT48 bottles') + ' — studio packaging render';
     });
+    const SCN = ['r-diagonal', 'l-twohands', 'm-shoulder', 'r-closeup', 'l-morning', 'm-strength', 'l-kitchen', 'r-stretch'];
+    v.scenarios = v.scenarios.map((u, i) => Object.assign({}, u, { image: 'assets/photos/' + SCN[i % SCN.length] + '.webp' }));
     return Object.assign(v, {
       subPrice: N.money(sc.total), subStrike: N.money(sc.v.price), subPct: sc.p.pct + '%', oncePrice: N.money(oc.total),
       rowSub: this.T.plan(v.isSub), rowOnce: this.T.plan(v.isOnce), dotSub: this.T.radio(v.isSub), dotOnce: this.T.radio(v.isOnce),
