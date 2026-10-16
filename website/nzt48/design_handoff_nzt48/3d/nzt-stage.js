@@ -10,7 +10,8 @@ import { setupGoldStudio } from './gold-studio.js';
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const lerp = (a, b, t) => a + (b - a) * t;
 const smooth = t => t * t * t * (t * (t * 6 - 15) + 10);
-const D2R = Math.PI / 180;
+const D2R = Math.PI / 180, TAU = Math.PI * 2;
+const wrapPi = a => a - TAU * Math.round(a / TAU);
 
 // One physical scale per viewport. Scroll changes position and orientation only.
 export function stageBottleHeight(width, height) {
@@ -130,7 +131,7 @@ export function mountStage(opts = {}) {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cleanup = [];
   const api = { force: null, ready: false };
-  let alive = true, raf = 0, three = null, mx = 0, my = 0, aspect = .62, primed = false;
+  let alive = true, raf = 0, three = null, mx = 0, my = 0, px = -1e4, py = -1e4, aspect = .62, primed = false;
 
   let bg = null;
   // Background shader removed by request; the page background stays flat.
@@ -145,7 +146,30 @@ export function mountStage(opts = {}) {
   cleanup.push(() => halo.remove());
   let haloBoost = 0;
 
-  const onPM = e => { mx = e.clientX / innerWidth * 2 - 1; my = e.clientY / innerHeight * 2 - 1; };
+  // Drag to spin: grab the bottle, it turns with your hand and eases back to its pose on release.
+  const drag = { yaw: 0, pitch: 0, vy: 0, vp: 0, on: false, x: 0, y: 0, t: 0 };
+  const grip = document.createElement('div');
+  grip.setAttribute('aria-hidden', 'true');
+  Object.assign(grip.style, { position: 'fixed', left: '0', top: '0', width: '100px', height: '100px', zIndex: '4', cursor: 'grab', touchAction: 'pan-y', borderRadius: '42%', display: 'none' });
+  document.body.appendChild(grip);
+  grip.addEventListener('pointerdown', e => { drag.on = true; drag.x = e.clientX; drag.y = e.clientY; drag.t = e.timeStamp; drag.vy = drag.vp = 0; grip.setPointerCapture(e.pointerId); grip.style.cursor = 'grabbing'; });
+  grip.addEventListener('pointermove', e => {
+    if (!drag.on) return;
+    const dt = Math.max(.008, (e.timeStamp - drag.t) / 1000), dx = (e.clientX - drag.x) * .011, dy = (e.clientY - drag.y) * .005;
+    drag.yaw += dx; drag.pitch = clamp(drag.pitch + dy, -.45, .45);
+    drag.vy = dx / dt; drag.vp = dy / dt; drag.x = e.clientX; drag.y = e.clientY; drag.t = e.timeStamp;
+  });
+  const release = () => {
+    if (!drag.on) return;
+    drag.on = false; grip.style.cursor = 'grab';
+    drag.yaw = wrapPi(drag.yaw); // spring back the short way
+    if (performance.now() - drag.t > 90) drag.vy = drag.vp = 0; // held still before letting go: no fling
+    drag.vy = clamp(drag.vy, -12, 12); drag.vp = clamp(drag.vp, -4, 4);
+  };
+  for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) grip.addEventListener(ev, release);
+  cleanup.push(() => grip.remove());
+
+  const onPM = e => { px = e.clientX; py = e.clientY; mx = px / innerWidth * 2 - 1; my = py / innerHeight * 2 - 1; };
   addEventListener('pointermove', onPM, { passive: true });
   cleanup.push(() => removeEventListener('pointermove', onPM));
   const onResize = () => { bg && bg.resize(); three && three.resize(); };
@@ -165,13 +189,17 @@ export function mountStage(opts = {}) {
     }
     const e = smooth(clamp((t - .14) / .72));
     const o = {};
-    for (const k of ['h', 'ry', 'tilt', 'open', 'pills', 'solo', 'arm', 'bottle', 'glow']) o[k] = lerp(a[k], b[k], e);
+    for (const k of ['h', 'tilt', 'open', 'pills', 'solo', 'arm', 'bottle', 'glow']) o[k] = lerp(a[k], b[k], e);
+    // Shortest way round between slots, so scrolling never adds a full extra spin.
+    o.ry = a.ry + wrapPi(b.ry - a.ry) * e;
     o.h = stageBottleHeight(innerWidth, innerHeight);
     const headerBottom = document.querySelector('header')?.getBoundingClientRect().bottom || 72;
     o.x = lerp(a.cx, b.cx, e);
     // Reserve the full cap-open envelope before the animation starts. Never
     // resize the bottle to fit a section. Dense content has a smooth side exit.
     o.y = clamp(lerp(a.cy, b.cy, e), headerBottom + 24 + o.h * (.56 + .24 * o.arm), innerHeight - 28 - o.h * .57);
+    // Past the last slot (the finale) the bottle stays in its section and scrolls away with it.
+    if (vc >= L.cy && L.arm) o.y = L.cy;
     return api.force ? Object.assign(o, api.force) : o;
   }
 
@@ -194,7 +222,7 @@ export function mountStage(opts = {}) {
     const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, toneMapped: false }));
     shadow.renderOrder = -1; scene.add(shadow);
     cleanup.push(() => { shadow.geometry.dispose(); shadow.material.dispose(); shadowTex.dispose(); }); camera.lookAt(0, 0, 0);
-    const product = await loadNZT(scene, { bottleUrl: base + 'nzt48-bottle-cap.glb', pillUrl: base + 'nzt48-gold-pill-pbr.glb' });
+    const product = await loadNZT(scene, { bottleUrl: base + 'nzt48-bottle-cap-v2.glb', pillUrl: base + 'nzt48-gold-pill-pbr.glb' });
     if (!alive) { product.dispose(); studio.dispose(); renderer.dispose(); return null; }
     const bottleEnv = scene.environment;
     const goldStudio = setupGoldStudio(renderer, scene);
@@ -227,7 +255,7 @@ export function mountStage(opts = {}) {
     const SPILL = [[-.30, .64, .18], [.02, .80, .26], [.31, .67, .12], [-.17, .95, -.06], [.25, .97, -.1], [-.47, .84, -.25], [.47, .82, -.2]];
     const pills = ORBIT.map((o, i) => {
       const obj = makePill(pillsG), mats = [];
-      obj.traverse(m => { if (m.isMesh) { m.material = m.material.clone(); m.material.envMap = goldStudio.texture; m.material.envMapIntensity = .8; m.material.transparent = true; m.material.opacity = 0; mats.push(m.material); } });
+      obj.traverse(m => { if (m.isMesh) { m.material = m.material.clone(); m.material.envMap = goldStudio.texture; m.material.envMapIntensity = .35; m.material.transparent = true; m.material.opacity = 0; mats.push(m.material); } });
       obj.visible = false;
       return { obj, mats, v: 0, spin: 0, init: false, pos: new THREE.Vector3(), o, s: SPILL[i], b: new THREE.Euler(i * 1.3, i * 2.1, .4 + i * .7), spd: (.07 + (i % 3) * .035) * (i % 2 ? 1 : -1) };
     });
@@ -235,95 +263,276 @@ export function mountStage(opts = {}) {
     const tv = new THREE.Vector3();
     const key = new THREE.PointLight(0xffc56a, 0, 0, 2), rim = new THREE.PointLight(0xffe2b0, 0, 0, 2);
     scene.add(key, rim);
-    let orbA = 0, lastT = 0;
+    let orbA = 0, lastT = 0, nextStrike = 2.5 + Math.random() * 3, nextRush = 0;
     // "Genie" bottling timeline (seconds from arrival at the data-bottling anchor):
-    // settle upright → cap unscrews and floats up → capsules swirl in a vortex and dive into the mouth → cap screws shut → bottle spins.
-    const TAU = Math.PI * 2, P0 = 1.5, PSTEP = .2, PDUR = 1.6, C0 = .5, C1 = 1.9, S0 = 4.25, S1 = 5.4, SP0 = 5.15, SP1 = 7.3;
+    // lean into the hand → cap unscrews and swings aside, tilted → one lead capsule dives in →
+    // the rest rush in a left-to-right spiral with lightning → cap swings back and seals → one spin → rests.
+    const HAND = .2, CAP0 = .4, CAP1 = 1.6, CLOSE0 = 4.6, CLOSE1 = 5.6, SP0 = 5.6, SP1 = 7.2;
+    const pillStart = i => i ? 2.3 + (i - 1) * .1 : 1.5, pillDur = i => i ? 1.6 : 1.3;
+    const RUSH_END = pillStart(pills.length - 1) + pillDur(pills.length - 1);
     const easeOut = t => 1 - Math.pow(1 - t, 3);
     const seq = { t0: -1, yawOff: 0, lastYaw: 0 };
+    const yAxis = new THREE.Vector3(0, 1, 0), capOff = new THREE.Vector3(), capE = new THREE.Euler(), capTilt = new THREE.Quaternion(), yawQ = new THREE.Quaternion();
+
+    // ---- Finale FX: lightning arcs, twinkles, an orbiting sparkle trail and a glow on the lead capsule. ----
+    const spriteTex = (() => {
+      const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+      const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+      r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.18, 'rgba(255,236,190,.85)'); r.addColorStop(.5, 'rgba(255,190,90,.18)'); r.addColorStop(1, 'rgba(255,170,60,0)');
+      g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+      g.fillStyle = 'rgba(255,240,200,.55)'; g.fillRect(31, 6, 2, 52); g.fillRect(6, 31, 52, 2);
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+    })();
+    const fx = o => Object.assign(o, { transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false });
+    function makePoints(n) {
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+      g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+      const pts = new THREE.Points(g, new THREE.PointsMaterial(fx({ map: spriteTex, vertexColors: true, size: .02 })));
+      pts.frustumCulled = false; return pts;
+    }
+    const TWN = 46, RING = 180, twinkles = makePoints(TWN), ring = makePoints(RING);
+    pillsG.add(twinkles, ring);
+    const twk = Array.from({ length: TWN }, () => { const a = Math.random() * TAU, r = .45 + Math.random() * .5; return { x: Math.cos(a) * r, y: -.55 + Math.random() * 1.4, z: Math.sin(a) * r, f: 1.2 + Math.random() * 2.6, ph: Math.random() * TAU }; });
+    twk.forEach((q, i) => twinkles.geometry.attributes.position.setXYZ(i, q.x * H, q.y * H, q.z * H));
+    const ringTilt = new THREE.Euler(.38, 0, -.22), rv = new THREE.Vector3();
+    const glowSprite = new THREE.Sprite(new THREE.SpriteMaterial(fx({ map: spriteTex, color: 0xffd27a, opacity: 0 })));
+    scene.add(glowSprite);
+    // Lightning: a thin jagged stroke that shoots out of a capsule into the bottle (power being delivered),
+    // with a few finer forks and a small spark where it lands. Never more than two at once.
+    const SEG = 18, BSEG = 7, NBR = 3, CORE_OP = 1, GLOW_OP = .14, FORK_OP = .8;
+    function ribbon(n, color) {
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 6), 3));
+      const idx = []; for (let j = 0; j < n - 1; j++) { const a = j * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); } g.setIndex(idx);
+      const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial(fx({ color, opacity: 0, depthTest: false, side: THREE.DoubleSide })));
+      m.frustumCulled = false; m.visible = false; m.renderOrder = 5; scene.add(m); return m;
+    }
+    const bolts = Array.from({ length: 2 }, () => {
+      const flash = new THREE.Sprite(new THREE.SpriteMaterial(fx({ map: spriteTex, color: 0xffe2a0, opacity: 0 }))); scene.add(flash);
+      return { core: ribbon(SEG, 0xfff4d6), glow: ribbon(SEG, 0xffbf55), forks: Array.from({ length: NBR }, () => ribbon(BSEG, 0xffe9b8)), flash, on: false, t0: 0, dur: .3, seed: 0, src: -1 };
+    });
+    const boltMeshes = b => [b.core, b.glow, ...b.forks];
+    cleanup.push(() => {
+      spriteTex.dispose(); glowSprite.material.dispose();
+      for (const o of [twinkles, ring]) { o.geometry.dispose(); o.material.dispose(); }
+      for (const b of bolts) { for (const m of boltMeshes(b)) { m.geometry.dispose(); m.material.dispose(); } b.flash.material.dispose(); }
+    });
+    const hash = x => { const q = Math.sin(x * 127.1 + 311.7) * 43758.5453; return q - Math.floor(q); };
+    const A3 = new THREE.Vector3(), B3 = new THREE.Vector3(), P3 = new THREE.Vector3(), D3 = new THREE.Vector3(), E3 = new THREE.Vector3(), perp = new THREE.Vector3();
+    const pts = Array.from({ length: SEG }, () => new THREE.Vector3()), fpts = Array.from({ length: BSEG }, () => new THREE.Vector3());
+    function writeRibbon(m, list, n, width, opacity) {
+      const pos = m.geometry.attributes.position;
+      for (let j = 0; j < n; j++) {
+        const p = list[j], q = list[Math.min(j + 1, n - 1)], o = list[Math.max(j - 1, 0)];
+        perp.set(o.y - q.y, q.x - o.x, 0); if (perp.lengthSq() < 1e-14) perp.set(0, 1, 0); perp.normalize();
+        const w = width * (1 - .6 * j / (n - 1));
+        pos.setXYZ(j * 2, p.x + perp.x * w, p.y + perp.y * w, p.z);
+        pos.setXYZ(j * 2 + 1, p.x - perp.x * w, p.y - perp.y * w, p.z);
+      }
+      pos.needsUpdate = true; m.material.opacity = opacity; m.visible = opacity > .003;
+    }
+    function hideBolt(bo) { for (const mm of boltMeshes(bo)) mm.visible = false; bo.flash.material.opacity = 0; }
+    function startBolt(src, t0, dur = .32) {
+      const bo = bolts.find(x => !x.on); if (!bo) return;
+      Object.assign(bo, { on: true, t0, dur, seed: Math.random() * 1000, src });
+    }
+    // Draws one bolt from a to b for this frame and returns its brightness (0 once it has finished).
+    function drawBolt(bo, a, b, width, time) {
+      const age = time - bo.t0;
+      if (age < 0) { hideBolt(bo); return 0; }
+      if (age > bo.dur) { bo.on = false; hideBolt(bo); return 0; }
+      const tick = Math.floor(age / .055), reveal = smooth(clamp(age / .08)); // shoots from the capsule to the bottle in 80 ms
+      const fade = (1 - smooth(clamp((age - bo.dur * .55) / (bo.dur * .45)))) * (.65 + .35 * hash(bo.seed + tick * 7.7));
+      D3.subVectors(b, a); const len = D3.length() || 1;
+      E3.set(-D3.y, D3.x, 0); if (E3.lengthSq() < 1e-14) E3.set(0, 1, 0); E3.normalize();
+      for (let j = 0; j < SEG; j++) {
+        const t = j / (SEG - 1) * reveal;
+        pts[j].lerpVectors(a, b, t).addScaledVector(E3, (hash(bo.seed + tick * 13.7 + j * 1.93) - .5) * .22 * len * Math.sin(Math.PI * t));
+      }
+      writeRibbon(bo.core, pts, SEG, width, CORE_OP * fade);
+      writeRibbon(bo.glow, pts, SEG, width * 3, GLOW_OP * fade);
+      const dx = D3.x / len, dy = D3.y / len;
+      bo.forks.forEach((fk, k) => {
+        const j0 = 3 + Math.floor(hash(bo.seed + k * 3.1) * (SEG - 8));
+        if (j0 / (SEG - 1) > reveal) { fk.visible = false; return; }
+        const ang = (k % 2 ? 1 : -1) * (.45 + .45 * hash(bo.seed + k * 5.3)), ca = Math.cos(ang), sa = Math.sin(ang), fl = len * (.1 + .16 * hash(bo.seed + k * 9.1));
+        const fxd = dx * ca - dy * sa, fyd = dx * sa + dy * ca;
+        for (let i = 0; i < BSEG; i++) {
+          const t = i / (BSEG - 1), jag = (hash(bo.seed + tick * 5.1 + k * 17 + i * 2.7) - .5) * .35 * fl * Math.sin(Math.PI * t);
+          fpts[i].copy(pts[j0]).add(P3.set((fxd - fyd * jag / fl) * fl * t, (fyd + fxd * jag / fl) * fl * t, 0));
+        }
+        writeRibbon(fk, fpts, BSEG, width * .55, FORK_OP * fade);
+      });
+      bo.flash.material.opacity = reveal >= 1 ? .55 * fade : 0;
+      if (reveal >= 1) { bo.flash.position.copy(b); bo.flash.scale.setScalar(width * (16 + 8 * hash(bo.seed + tick))); }
+      return fade;
+    }
+
     function pose(c, time, ie) {
       const vh = 2 * 4 * Math.tan(10 * D2R), k = vh / innerHeight;
-      const s = stageBottleHeight(innerWidth, innerHeight) * k / H;
-      const open = 0;
+      const s = stageBottleHeight(innerWidth, innerHeight) * k / H, W = H * s;
       const idle = reduced ? 0 : 1;
       const dt = Math.min(.05, Math.max(0, time - lastT)); lastT = time;
       if (c.arm > .95 && !reduced && ie > .99) { if (seq.t0 < 0) seq.t0 = time; }
       else if (c.arm < .4 && seq.t0 >= 0) { seq.t0 = -1; seq.yawOff = ((seq.lastYaw % TAU) + TAU + Math.PI) % TAU - Math.PI; }
       const st = seq.t0 >= 0 ? time - seq.t0 : -1;
       seq.yawOff *= Math.exp(-dt * 2.5);
-      // Settle: bob and lean ease out on arrival, return gently once the spin is done.
+      // Settle: bob and sway ease out on arrival, return gently once the spin is done.
       const calm = st >= 0 ? Math.min(1, 1 - smooth(clamp(st / .9)) + smooth(clamp((st - 7) / 1.6))) : 1;
-      const tilt = c.tilt * (st >= 0 ? 1 - smooth(clamp(st / 1.1)) : 1);
-      const seal = st >= 0 ? Math.exp(-Math.pow((st - S1) / .14, 2)) : 0;
+      // Hand-held lean toward the incoming capsules; back to the slot's lean after the seal.
+      const hand = st >= 0 ? smooth(clamp(st / 1.1)) * (1 - smooth(clamp((st - CLOSE1) / 1.4))) : 0;
+      const tilt = lerp(c.tilt, HAND, hand);
+      const seal = st >= 0 ? Math.exp(-Math.pow((st - CLOSE1) / .14, 2)) : 0;
+      // Drifts a little left as the cap opens, then glides back right while the capsules pour in.
+      const sweep = st >= 0 ? -.07 * smooth(clamp(st / .8)) * (1 - smooth(clamp((st - 1.5) / 3.2))) : 0;
       const bob = Math.sin(time * .9) * c.h * .012 * idle * calm - seal * c.h * .012;
-      pivot.position.set((c.x - innerWidth / 2) * k, -(c.y - innerHeight / 2) * k + bob * k, 0);
+      pivot.position.set((c.x - innerWidth / 2) * k + sweep * W, -(c.y - innerHeight / 2) * k + bob * k, 0);
       pivot.scale.setScalar(s);
-      pivot.rotation.set(my * .06 * idle + .04, 0, tilt + Math.sin(time * .6) * .018 * idle * calm);
-      shadow.position.set(pivot.position.x + Math.sin(pivot.rotation.z) * .1, pivot.position.y - H * s * .54 - bob * k * .5, -.05);
-      shadow.scale.set(H * s * .9, H * s * .26, 1);
+      pivot.rotation.set(my * .06 * idle + .04 + drag.pitch, 0, tilt + Math.sin(time * .6) * .018 * idle * calm);
+      shadow.position.set(pivot.position.x + Math.sin(pivot.rotation.z) * .1, pivot.position.y - W * .54 - bob * k * .5, -.05);
+      shadow.scale.set(W * .9, W * .26, 1);
       shadow.material.opacity = ie * (1 - Math.min(1, Math.abs(tilt) * 2.2)) * .9;
       let sy = 0;
       if (st >= 0) {
-        const d = Math.max(0, st - 6.9);
-        sy = -.55 * smooth(clamp((st - 1) / 3.3)) - TAU * easeOut(clamp((st - SP0) / (SP1 - SP0))) - .32 * (d < 1 ? d * d / 2 : d - .5);
+        sy = -.55 * smooth(clamp((st - 1) / 3.3)) * (1 - smooth(clamp((st - 4.6) / 2))) - TAU * easeOut(clamp((st - SP0) / (SP1 - SP0)));
         seq.lastYaw = sy;
       }
-      yawG.rotation.y = c.ry + sy + seq.yawOff + (Math.sin(time * .45) * .12 * calm + mx * .2) * idle;
+      yawG.rotation.y = c.ry + sy + seq.yawOff + drag.yaw + (Math.sin(time * .45) * .12 * calm + mx * .2) * idle;
+      let swing = 0;
       if (st >= 0) {
-        const capP = smooth(clamp((st - C0) / (C1 - C0))) * (1 - smooth(clamp((st - S0) / (S1 - S0))));
-        // A short mechanical lift leaves room for the floating cap and pills.
-        product.setCapOpening(capP, { lift: .18 * capUnit });
-        const lift = smooth(clamp((capP - .45) / .55));
-        product.cap.position.y += lift * .06 * capUnit;
-        product.cap.position.x += Math.sin(time * 1.4) * .012 * capUnit * lift;
+        const openP = smooth(clamp((st - CAP0) / (CAP1 - CAP0))) * (1 - smooth(clamp((st - CLOSE0) / (CLOSE1 - CLOSE0))));
+        product.setCapOpening(clamp(openP / .45) * .42); // unscrew only; the swing below lifts it clear
+        swing = smooth(clamp((openP - .4) / .6));
+        // Up and out to the right of the mouth (in the bottle's lean frame, not its spin), tilted like a flipped lid.
+        yawQ.setFromAxisAngle(yAxis, -yawG.rotation.y);
+        capOff.set(.48, .32 + Math.sin(time * 1.6) * .012, .1).multiplyScalar(swing * capUnit).applyQuaternion(yawQ);
+        product.cap.position.add(capOff);
+        capTilt.setFromEuler(capE.set(.3 * swing, 0, -1.05 * swing));
+        capTilt.premultiply(yawQ).multiply(yawQ.invert());
+        product.cap.quaternion.premultiply(capTilt);
       } else product.resetCap();
       pillsG.position.copy(pivot.position); pillsG.scale.setScalar(s);
+      pillsG.rotation.set(pivot.rotation.x, 0, pivot.rotation.z * (st >= 0 ? smooth(clamp(st / .9)) : 0));
       let pulse = 0;
-      if (st >= 0) for (let i = 0; i < pills.length; i++) { const u = clamp((st - P0 - i * PSTEP) / PDUR); pulse = Math.max(pulse, Math.exp(-Math.pow((u - .9) / .08, 2))); }
-      haloBoost = (pulse * .35 + seal * .6) * c.arm;
-      key.intensity = 5 * c.solo + (pulse * 7 + seal * 10) * c.arm; rim.intensity = 4 * c.solo + (pulse * 4 + seal * 6) * c.arm;
-      key.position.set(pivot.position.x - .45, pivot.position.y + .5, .9);
-      rim.position.set(pivot.position.x + .5, pivot.position.y + .2, -.4);
-      pillsG.rotation.set(pivot.rotation.x, 0, 0);
-      orbA += dt * .05 * idle * (1 - open);
+      if (st >= 0) for (let i = 0; i < pills.length; i++) { const u = clamp((st - pillStart(i)) / pillDur(i)); pulse = Math.max(pulse, Math.exp(-Math.pow((u - .9) / .08, 2))); }
+      orbA += dt * .05 * idle;
       const ca = Math.cos(orbA), sa = Math.sin(orbA);
       const want = Math.round(c.pills * pills.length);
       const kf = 1 - Math.exp(-dt * 2.4), kp = 1 - Math.exp(-dt * 2.8);
+      const m = mouthY * H;
+      // How close the pointer is to the bottle (1 while dragging): makes the occasional lightning a little more frequent.
+      const near = drag.on ? 1 : 1 - clamp((Math.hypot(px - c.x, py - c.y) - c.h * .55) / (c.h * .9));
       pills.forEach((p, i) => {
-        const pst = P0 + i * PSTEP;
+        const pst = pillStart(i), dur = pillDur(i), lead = i === 0;
         if (st >= pst) {
-          if (!p.vx) { p.vx = { r: Math.hypot(p.pos.x, p.pos.z), a: Math.atan2(p.pos.z, p.pos.x), y: p.pos.y, v: p.v }; }
-          const u = clamp((st - pst) / PDUR), m = mouthY * H, hover = m + .5 * H;
-          const r = p.vx.r * Math.pow(1 - Math.min(u / .85, 1), 1.4);
-          const a = p.vx.a - (u * u * 2 + u * 2.6) * Math.PI;
-          const y = u < .62 ? lerp(p.vx.y, hover, smooth(u / .62)) : lerp(hover, m - .08 * H, Math.pow((u - .62) / .38, 2));
-          p.pos.set(Math.cos(a) * r, y, Math.sin(a) * r);
+          if (!p.vx) p.vx = { start: p.pos.clone(), v: p.v, jr: (hash(i * 7.1) - .5) * .08, jy: (hash(i * 3.3) - .5) * .06 };
+          const u = clamp((st - pst) / dur), w = clamp((u - .15) / .85), b = smooth(clamp(u / .35));
+          // Spiral funnel: enters from the left, sweeps across the front, tightens and dives into the mouth.
+          const r = ((lead ? .5 : .6) + p.vx.jr) * H * Math.pow(1 - w, 1.2);
+          const a = Math.PI - w * TAU * 1.15;
+          const y = m + ((lead ? .5 : .55) + p.vx.jy) * H * Math.pow(1 - w, 1.1) - .1 * H * smooth(clamp((u - .85) / .15));
+          tv.set(Math.cos(a) * r, y, Math.sin(a) * r);
+          p.pos.lerpVectors(p.vx.start, tv, b);
           p.obj.position.copy(p.pos);
-          p.spin += dt * (1.5 + u * 6);
-          const up = smooth(clamp((u - .45) / .4));
+          p.spin += dt * (2 + u * 7);
+          const up = smooth(clamp((u - .55) / .3));
           p.obj.rotation.set(lerp(p.b.x, 0, up), p.b.y + p.spin, lerp(p.b.z, Math.PI / 2, up));
-          p.obj.scale.setScalar(1 - .65 * smooth(clamp((u - .72) / .28)));
-          p.v = Math.max(p.vx.v, smooth(clamp(u / .15))) * (1 - smooth(clamp((u - .88) / .12)));
+          p.obj.scale.setScalar((lead ? 1.25 : 1) * (1 - .65 * smooth(clamp((u - .78) / .22))));
+          p.v = Math.max(p.vx.v, smooth(clamp(u / .15))) * (1 - smooth(clamp((u - .9) / .1)));
           p.obj.visible = p.v > .004;
           for (const mm of p.mats) mm.opacity = p.v;
+          p.flight = u;
           return;
         }
+        p.flight = -1;
         if (p.vx) { p.vx = null; if (st < 0) p.v = 0; }
-        if (st >= 0 && st > P0 + PSTEP * pills.length + PDUR) return;
+        if (st >= 0 && st > RUSH_END) return;
         const so = i ? 0 : c.solo;
         const tgt = i < want && (i === 0 || c.solo < .5) ? ie : 0;
         p.v += (tgt - p.v) * (p.init ? kf : 1);
         p.obj.visible = p.v > .004;
-        const ox = p.o[0] * ca - p.o[2] * sa, oz = p.o[0] * sa + p.o[2] * ca;
+        const spread = 1 + .3 * swing; // waiting capsules make room for the swung-out cap
+        const ox = (p.o[0] * ca - p.o[2] * sa) * spread, oz = (p.o[0] * sa + p.o[2] * ca) * spread;
         const f = Math.sin(time * .6 + i * 1.7) * .025 * idle;
-        tv.set(lerp(lerp(ox, p.s[0], open), -.34, so) * H, (lerp(lerp(p.o[1], p.s[1], open), -.1, so) + f) * H, lerp(lerp(oz, p.s[2], open), .6, so) * H);
+        tv.set(lerp(ox, -.34, so) * H, (lerp(p.o[1], -.1, so) + f) * H, lerp(oz, .6, so) * H);
         if (!p.init) { p.pos.copy(tv); p.init = true; } else p.pos.lerp(tv, kp);
         p.obj.position.copy(p.pos);
         p.spin += dt * lerp(p.spd, .2, so) * (reduced ? 0 : 1);
         p.obj.rotation.set(lerp(p.b.x + p.spin * .2, .14, so), p.b.y + p.spin, lerp(p.b.z, Math.PI / 2 - .3, so));
         p.obj.scale.setScalar((.85 + .15 * p.v) * (1 + so * 1.5));
-        for (const m of p.mats) m.opacity = p.v;
+        for (const mm of p.mats) mm.opacity = p.v;
       });
+
+      // Lightning is a surprise, not a show: now and then one floating capsule (rarely two) shoots power into the
+      // bottle, a little more often while you're near it. In the finale the lead capsule and a few of the rushing
+      // ones fire into the mouth. Never more than two bolts at once.
+      composition.updateMatrixWorld(true);
+      if (!reduced) {
+        if ((st < 0 || st > RUSH_END) && time >= nextStrike) {
+          // Only capsules off to the side with clear air to the bottle, so the bolt reads.
+          const br = aspect * H * .5;
+          const live = pills.map((p, i) => i).filter(i => {
+            const p = pills[i]; if (!p.obj.visible || p.v < .5 || p.flight >= 0) return false;
+            p.obj.getWorldPosition(P3); pivot.worldToLocal(P3);
+            return Math.abs(P3.x) - br > .22 * H; // clear sideways gap on screen
+          });
+          if (live.length) {
+            const first = live[Math.floor(Math.random() * live.length)];
+            startBolt(first, time);
+            const rest = live.filter(i => i !== first);
+            if (rest.length && Math.random() < .3) startBolt(rest[Math.floor(Math.random() * rest.length)], time + .09);
+          }
+          nextStrike = time + (!live.length ? .4 : near > .5 ? 1.4 + Math.random() * 1.8 : 3.5 + Math.random() * 4.5);
+        }
+        if (st >= 0 && st <= RUSH_END) {
+          if (pills[0].flight > .3 && pills[0].flight < .8 && !bolts.some(b => b.on && b.src === 0)) startBolt(0, time, .45);
+          if (time >= nextRush) {
+            const flying = pills.map((p, i) => i).filter(i => i && pills[i].flight > .35 && pills[i].flight < .75);
+            if (flying.length) { startBolt(flying[Math.floor(Math.random() * flying.length)], time, .28); nextRush = time + .4; }
+          }
+        }
+      }
+      let strike = 0;
+      for (const bo of bolts) {
+        if (!bo.on) continue;
+        const p = pills[bo.src];
+        if (!p || !p.obj.visible) { bo.on = false; hideBolt(bo); continue; }
+        p.obj.getWorldPosition(A3);
+        if (p.flight >= 0) { B3.set(0, m, 0); yawG.localToWorld(B3); } // into the mouth
+        else { // the bottle wall facing the capsule
+          P3.copy(A3); pivot.worldToLocal(P3);
+          const rr = Math.hypot(P3.x, P3.z) || 1, br = aspect * H * .5;
+          B3.set(P3.x / rr * br, clamp(P3.y, -.38 * H, .28 * H), P3.z / rr * br); pivot.localToWorld(B3);
+        }
+        strike = Math.max(strike, drawBolt(bo, A3, B3, W * .003, time));
+      }
+      const lp = pills[0];
+      glowSprite.material.opacity = st >= 0 && lp.flight >= 0 ? lp.v * .55 : 0;
+      if (glowSprite.material.opacity > 0) { lp.obj.getWorldPosition(glowSprite.position); glowSprite.scale.setScalar(W * .32); }
+
+      haloBoost = (pulse * .45 + seal * .9) * c.arm + strike * .1;
+      key.intensity = 5 * c.solo + (pulse * 7 + seal * 10) * c.arm + strike * 2; rim.intensity = 4 * c.solo + (pulse * 4 + seal * 6) * c.arm + strike * 1.2;
+      key.position.set(pivot.position.x - .45, pivot.position.y + .5, .9);
+      rim.position.set(pivot.position.x + .5, pivot.position.y + .2, -.4);
+
+      // Twinkles near the bottle everywhere (brighter in the finale) and a sparkle trail orbiting it after the seal.
+      const fin = st >= 0 ? smooth(clamp((st - CLOSE1 + .2) / .7)) : 0;
+      const twA = 2.2 * (.3 + .7 * Math.max(fin, pulse * .6)) * ie * c.bottle * (reduced ? .5 : 1);
+      const tc = twinkles.geometry.attributes.color;
+      twk.forEach((q, i) => { const v = Math.pow(Math.max(0, Math.sin(time * q.f + q.ph)), 8) * twA; tc.setXYZ(i, v, v * .86, v * .55); });
+      tc.needsUpdate = true;
+      twinkles.material.size = W * .085;
+      ring.visible = fin > .002;
+      if (ring.visible) {
+        const rc = ring.geometry.attributes.color, rp = ring.geometry.attributes.position, head = time * 1.5;
+        for (let j = 0; j < RING; j++) {
+          const th = head - j * .03, f = 2.6 * Math.pow(1 - j / RING, 1.6) * fin * (j < 4 ? 2 : 1) * (.75 + .25 * Math.sin(time * 9 + j * 1.7));
+          rv.set(Math.cos(th) * .62 * H, (.02 + .04 * Math.sin(th * 2)) * H, Math.sin(th) * .62 * H).applyEuler(ringTilt);
+          rp.setXYZ(j, rv.x, rv.y, rv.z); rc.setXYZ(j, f, f * .84, f * .5);
+        }
+        rp.needsUpdate = rc.needsUpdate = true;
+        ring.material.size = W * .06;
+      }
     }
 
     // Product still for bundle cards and cart, rendered from the same model and lighting.
@@ -356,6 +565,7 @@ export function mountStage(opts = {}) {
         canvas.dataset.nztMotion = 'continuous';
         canvas.dataset.nztBottleScale = String(pivot.scale.x);
         canvas.dataset.nztBottleYaw = String(yawG.rotation.y);
+        canvas.dataset.nztBolts = String(bolts.filter(b => b.on && b.core.visible).length);
         renderer.render(scene, camera);
       }
     };
@@ -397,10 +607,20 @@ export function mountStage(opts = {}) {
     const tg = target();
     if (tg) {
       const k = primed && !reduced ? 1 - Math.exp(-dt * 6.5) : 1;
-      for (const key in cur) cur[key] += (tg[key] - cur[key]) * k;
+      for (const key in cur) cur[key] += (key === 'ry' ? wrapPi(tg.ry - cur.ry) : tg[key] - cur[key]) * k;
       primed = true;
     }
-    if (three) three.draw(cur, time);
+    if (!drag.on) { // soft spring home, slightly under-damped so it settles with an ease
+      const K = 16, C = 5.6;
+      drag.vy += (-K * drag.yaw - C * drag.vy) * dt; drag.yaw += drag.vy * dt;
+      drag.vp += (-K * drag.pitch - C * drag.vp) * dt; drag.pitch += drag.vp * dt;
+    }
+    if (three) {
+      const gw = cur.h * aspect * 1.25, gh = cur.h * 1.12, show = cur.x + gw / 2 > 0 && cur.x - gw / 2 < innerWidth && cur.y + gh / 2 > 0 && cur.y - gh / 2 < innerHeight;
+      grip.style.display = show ? 'block' : 'none';
+      if (show) Object.assign(grip.style, { width: gw.toFixed(0) + 'px', height: gh.toFixed(0) + 'px', transform: 'translate3d(' + (cur.x - gw / 2).toFixed(1) + 'px,' + (cur.y - gh / 2).toFixed(1) + 'px,0)' });
+      three.draw(cur, time);
+    }
     {
       const sz = cur.h * 1.45 * (1 + haloBoost * .25), breathe = reduced ? 1 : .92 + .08 * Math.sin(time * .8);
       halo.style.transform = 'translate3d(' + (cur.x - 50).toFixed(1) + 'px,' + (cur.y - 50).toFixed(1) + 'px,0) scale(' + (sz / 100).toFixed(3) + ',' + (sz * 1.08 / 100).toFixed(3) + ')';

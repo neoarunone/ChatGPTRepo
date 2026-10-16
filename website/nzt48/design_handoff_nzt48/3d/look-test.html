@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>NZT48 look test</title>
+<style>
+body{margin:0;background:#fff;display:grid;grid-template-columns:repeat(2,1fr);gap:0}
+figure{margin:0;position:relative;height:50vh;display:flex;align-items:center;justify-content:center;background:#fff}
+figure img,figure canvas{max-height:100%;max-width:100%}
+figcaption{position:absolute;top:6px;left:8px;font:12px Arial;color:#888}
+.dark{background:#0b0c0d}
+body.solo{grid-template-columns:1fr 1fr}body.solo figure{height:100vh}body.solo .hide{display:none}
+</style></head>
+<body>
+<figure><img src="look-ref/ref-front.webp"><figcaption>reference</figcaption></figure>
+<figure><canvas id="front" width="900" height="900"></canvas><figcaption>ours · front</figcaption></figure>
+<figure class="t"><img src="look-ref/ref-tilted.webp"><figcaption>reference</figcaption></figure>
+<figure class="t"><canvas id="tilt" width="900" height="900"></canvas><figcaption>ours · tilted</figcaption></figure>
+<script type="module">
+import * as THREE from './vendor/three.module.min.js';
+import { setupNZTStudio } from './studio-lighting.js';
+import { loadNZT } from './nzt-model.js';
+const only = new URLSearchParams(location.search).get('only');
+if (only) { document.body.classList.add('solo'); document.querySelectorAll(only==='tilt' ? 'figure:not(.t)' : 'figure.t').forEach(f => f.classList.add('hide')); }
+const v = new URLSearchParams(location.search).get('v') || Date.now();
+async function view(id, { yaw = 0, tilt = 0, pill = false, bg = 0xffffff }) {
+  const canvas = document.getElementById(id);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+  renderer.setClearColor(bg, 1);
+  const scene = new THREE.Scene();
+  setupNZTStudio(renderer, scene); renderer.toneMappingExposure = 1.0;
+  const p = await loadNZT(scene, { bottleUrl: './nzt48-bottle-cap-v2.glb?v=' + v, pillUrl: './nzt48-gold-pill-pbr.glb?v=' + v });
+  const box = new THREE.Box3().setFromObject(p.model), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+  const g = new THREE.Group(); scene.add(g); g.add(p.model); p.model.position.sub(c);
+  p.model.rotation.y = yaw; g.rotation.z = tilt; g.rotation.x = tilt ? .18 : 0;
+  if (pill) { const q = p.createPill(g); q.position.set(-size.x * .55, size.y * .2, size.x * .45); q.rotation.set(.3, .2, -.9); }
+  const cam = new THREE.PerspectiveCamera(20, 1, .01, 50);
+  const d = size.y * 1.25 / (2 * Math.tan(10 * Math.PI / 180));
+  cam.position.set(0, size.y * .12, d); cam.lookAt(0, 0, 0);
+  renderer.render(scene, cam);
+}
+await view('front', {});
+await view('tilt', { tilt: -.42, yaw: -.35, pill: true });
+// Save reference + render side by side (POST to the local preview server).
+for (const [id, ref] of [['front', 'ref-front.webp'], ['tilt', 'ref-tilted.webp']]) {
+  const img = new Image(); img.src = 'look-ref/' + ref; await img.decode();
+  const out = document.createElement('canvas'); out.width = 1800; out.height = 900;
+  const g2 = out.getContext('2d'); g2.fillStyle = '#fff'; g2.fillRect(0, 0, 1800, 900);
+  const k = Math.min(900 / img.width, 900 / img.height); g2.drawImage(img, (900 - img.width * k) / 2, (900 - img.height * k) / 2, img.width * k, img.height * k);
+  g2.drawImage(document.getElementById(id), 900, 0, 900, 900);
+  const blob = await new Promise(r => out.toBlob(r, 'image/png'));
+  await fetch('/__shot/' + id + '-' + (new URLSearchParams(location.search).get('tag') || 'now') + '.png', { method: 'POST', body: blob }).catch(() => {});
+}
+document.body.dataset.ready = 1;
+</script>
+</body></html>
