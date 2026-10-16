@@ -218,7 +218,7 @@ export function mountStage(opts = {}) {
     const camera = new THREE.PerspectiveCamera(20, innerWidth / innerHeight, .1, 50);
     camera.position.set(0, 0, 4);
     // Contact shadow disc under the bottle, fades with the bottle's lean.
-    const shadowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'); const r = g.createRadialGradient(128, 128, 10, 128, 128, 128); r.addColorStop(0, 'rgba(0,0,0,.55)'); r.addColorStop(.45, 'rgba(0,0,0,.22)'); r.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = r; g.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); return t; })();
+    const shadowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'); const r = g.createRadialGradient(128, 128, 10, 128, 128, 128); r.addColorStop(0, 'rgba(0,0,0,.5)'); r.addColorStop(.55, 'rgba(0,0,0,.32)'); r.addColorStop(.8, 'rgba(0,0,0,.08)'); /* tight footprint under the base */ r.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = r; g.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); return t; })();
     const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, toneMapped: false }));
     shadow.renderOrder = -1; scene.add(shadow);
     cleanup.push(() => { shadow.geometry.dispose(); shadow.material.dispose(); shadowTex.dispose(); }); camera.lookAt(0, 0, 0);
@@ -389,9 +389,9 @@ export function mountStage(opts = {}) {
       pivot.position.set((c.x - innerWidth / 2) * k + sweep * W, -(c.y - innerHeight / 2) * k + bob * k, 0);
       pivot.scale.setScalar(s);
       pivot.rotation.set(my * .06 * idle + .04 + drag.pitch, 0, tilt + Math.sin(time * .6) * .018 * idle * calm);
-      shadow.position.set(pivot.position.x + Math.sin(pivot.rotation.z) * .1, pivot.position.y - W * .54 - bob * k * .5, -.05);
-      shadow.scale.set(W * .9, W * .26, 1);
-      shadow.material.opacity = ie * (1 - Math.min(1, Math.abs(tilt) * 2.2)) * .9;
+      shadow.position.set(pivot.position.x + Math.sin(pivot.rotation.z) * .1, pivot.position.y - W * .515 - bob * k * .5, -.05);
+      shadow.scale.set(W * .6, W * .085, 1); // as wide as the bottle base, a thin flat ellipse
+      shadow.material.opacity = ie * (1 - Math.min(1, Math.abs(tilt) * 2.2)) * .45;
       let sy = 0;
       if (st >= 0) {
         sy = -.55 * smooth(clamp((st - 1) / 3.3)) * (1 - smooth(clamp((st - 4.6) / 2))) - TAU * easeOut(clamp((st - SP0) / (SP1 - SP0)));

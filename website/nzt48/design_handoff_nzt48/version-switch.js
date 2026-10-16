@@ -6,6 +6,10 @@
     { v: 'V3', name: 'Cinematic', file: 'NZT48 V3 - Cinematic.html' },
   ];
   if (/[?&]embed=1/.test(location.search)) return;
+  // Colour theme preview (pages marked data-themeable): dark = original, light = V2's cream & blue
+  var root = document.documentElement, themed = root.hasAttribute('data-themeable');
+  var theme = 'dark'; try { theme = localStorage.getItem('nzt-theme') || 'dark'; } catch (e) {}
+  if (themed) root.setAttribute('data-theme', theme);
   var path = decodeURIComponent(location.pathname);
   var cur = VERSIONS.findIndex(function (x) { return path.endsWith('/' + x.file); });
 
@@ -43,6 +47,23 @@
     })();
   }
 
-  function init() { build(); restore(); }
+  // Separate colour-theme pill, bottom left (only on pages that support it)
+  function buildTheme() {
+    if (!themed) return;
+    var box = document.createElement('div');
+    box.id = 'lx-theme-switch';
+    box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'Colour theme');
+    box.style.cssText = 'position:fixed;left:16px;bottom:' + (innerWidth < 900 ? '88px' : '16px') + ';z-index:2147483000;display:flex;gap:4px;padding:5px;border-radius:999px;background:#111;box-shadow:0 10px 30px rgba(0,0,0,.4);font:600 13px/1 Poppins,Arial,sans-serif';
+    var opts = [['dark', 'Dark'], ['light', 'Light']], btns = [];
+    var paint = function () { btns.forEach(function (b) { var on = b.dataset.t === theme; b.setAttribute('aria-pressed', on); b.style.background = on ? (theme === 'light' ? '#26357A' : '#E2C675') : 'rgba(255,255,255,.1)'; b.style.color = on && theme === 'dark' ? '#111' : '#fff'; }); };
+    opts.forEach(function (o) {
+      var b = document.createElement('button'); b.type = 'button'; b.dataset.t = o[0]; b.textContent = o[1];
+      b.style.cssText = 'border:0;cursor:pointer;height:36px;padding:0 16px;border-radius:999px;white-space:nowrap;font:inherit';
+      b.onclick = function () { theme = o[0]; root.setAttribute('data-theme', theme); try { localStorage.setItem('nzt-theme', theme); } catch (e) {} paint(); };
+      btns.push(b); box.appendChild(b);
+    });
+    paint(); document.body.appendChild(box);
+  }
+  function init() { build(); buildTheme(); restore(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

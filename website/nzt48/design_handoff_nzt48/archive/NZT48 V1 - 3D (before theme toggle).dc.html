@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<script src="./version-switch.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>NZT48 Original · The Limitless Pill · Limitless X</title>
+<meta name="description" content="NZT48 Original: a once-daily nootropic capsule with the 750mg NZT-48 Blend. 30, 60 and 90 capsule options.">
+<script src="./nzt48-shared.js"></script>
+<style>
+@font-face{font-family:"Boldonse";src:url("./assets/Boldonse-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Poppins";src:url("./assets/fonts/Poppins-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Poppins";src:url("./assets/fonts/Poppins-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Poppins";src:url("./assets/fonts/Poppins-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Poppins";src:url("./assets/fonts/Poppins-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+html,body{margin:0;background:#08090B;color:#F3F1EC;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#F4C430}
+a:hover{color:#FFE07A}
+button,select{font-family:inherit}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid #F4C430;outline-offset:3px}
+::selection{background:#F4C430;color:#08090B}
+@keyframes lxMarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes dd-run{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.dd-row{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:18px;width:100%;cursor:pointer;padding:6px 0;font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;line-height:1.3;transition:color .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1)}
+.dd-row:focus-visible{outline:2px solid #F4C430;outline-offset:6px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;font-family:Poppins,sans-serif;overflow-x:clip;color:#F3F1EC">
+
+  <div style="overflow:hidden;white-space:nowrap;background:rgba(244,196,48,.08)">
+    <div style="display:inline-flex;gap:56px;padding:11px 0;font:500 12px/1 Poppins,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#F4C430;animation:lxMarq 46s linear infinite">
+      <span>Free US shipping on orders $70+</span><span>Subscribe &amp; save up to 20%</span><span>30-day money-back guarantee</span><span>Made in the USA · GMP-certified facility</span>
+      <span>Free US shipping on orders $70+</span><span>Subscribe &amp; save up to 20%</span><span>30-day money-back guarantee</span><span>Made in the USA · GMP-certified facility</span>
+    </div>
+  </div>
+
+  <header style="position:sticky;top:0;z-index:40;background:rgba(8,9,11,.5);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)">
+    <div style="max-width:1320px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+      <img src="assets/logo-limitlessx.svg" alt="Limitless X" style="height:22px;width:auto;filter:invert(1)">
+      <nav style="display:flex;gap:30px;align-items:center;font:500 14px/1 Poppins,sans-serif">
+        <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+          <a href="#formula" style="color:#C9CBD0;text-decoration:none;white-space:nowrap" style-hover="color:#F3F1EC">Formula</a>
+          <a href="#facts" style="color:#C9CBD0;text-decoration:none;white-space:nowrap" style-hover="color:#F3F1EC">Supplement Facts</a>
+          <a href="#faq" style="color:#C9CBD0;text-decoration:none;white-space:nowrap" style-hover="color:#F3F1EC">FAQ</a>
+        </sc-if>
+        <a href="#buy" style="display:inline-flex;align-items:center;min-height:44px;padding:0 22px;border-radius:999px;background:#F3F1EC;color:#08090B;text-decoration:none;font:600 14px/1 Poppins,sans-serif;white-space:nowrap" style-hover="background:#F4C430;color:#08090B">Shop NZT48</a>
+      </nav>
+    </div>
+  </header>
+
+  <section data-screen-label="Hero" style="position:relative">
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">NZT48 Original, The Limitless Pill</h1>
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(16px,3vw,40px) 24px clamp(24px,3vw,40px);display:flex;gap:clamp(24px,4vw,64px);align-items:stretch">
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1.05 1 0;min-width:0;position:relative">
+          <div data-nzt-anchor="hero" data-ry="-18" data-tilt="-4" data-pills=".45" data-fit=".62" style="position:sticky;top:80px;height:calc(100svh - 120px);max-height:900px;min-height:460px;display:flex;align-items:center;justify-content:center">
+            <span aria-hidden="true" style="position:absolute;font-family:Boldonse,Poppins,sans-serif;font-size:min(30vw,58vh,420px);line-height:1.3;letter-spacing:-.04em;background:linear-gradient(180deg,rgba(244,196,48,.22),rgba(244,196,48,0) 82%);-webkit-background-clip:text;background-clip:text;color:transparent;pointer-events:none;padding:.08em .06em .14em;display:inline-block">48</span>
+            <img data-nzt-fallback="" src="assets/bottle.png" alt="NZT48 Original bottle" style="position:relative;height:80%;width:auto;opacity:0;transition:opacity .4s">
+          </div>
+        </div>
+      </sc-if>
+      <div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:18px;max-width:560px">
+        <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+          <div data-nzt-anchor="hero-m" data-ry="-18" data-tilt="-4" data-pills=".45" data-fit=".7" style="position:relative;height:min(96vw,500px);display:flex;align-items:center;justify-content:center">
+            <img data-nzt-fallback="" src="assets/bottle.png" alt="" style="position:relative;height:84%;width:auto;opacity:0;transition:opacity .4s">
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">Nootropic capsules · 750mg blend</span>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px">
+            <span style="font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:clamp(26px,2.6vw,36px);line-height:1.4;color:#F3F1EC">NZT48 Original</span>
+            <span style="display:flex;align-items:center;gap:8px;font:500 14px/1 Poppins,sans-serif;color:#C9CBD0"><span style="color:#F4C430;letter-spacing:2px;font-size:14px">★★★★★</span><strong style="color:#F3F1EC">{{ rating }}</strong> · {{ reviewCount }} reviews</span>
+          </div>
+          <p style="margin:0;font:500 17px/1.45 Poppins,sans-serif;color:#E4E2DC">Focus support in a single daily capsule.*</p>
+        </div>
+        <div id="buy" style="display:flex;flex-direction:column;gap:16px;padding:clamp(16px,2vw,22px);border-radius:30px;background:rgba(20,21,26,.62);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 0 0 1px rgba(255,255,255,.07),0 40px 90px rgba(0,0,0,.5);scroll-margin-top:96px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:2px 4px 0">
+            <span style="font:600 15px/1.2 Poppins,sans-serif;color:#F3F1EC">Choose your supply</span>
+            <span style="font:400 13px/1.2 Poppins,sans-serif;color:#9A9DA3">1 capsule a day</span>
+          </div>
+          <div role="radiogroup" aria-label="Supply" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+            <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="3">
+              <button type="button" role="radio" aria-checked="{{ s.sel }}" onClick="{{ s.pick }}" style="{{ s.style }}">
+                <sc-if value="{{ s.best }}"><span style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);padding:4px 9px;border-radius:999px;background:#F4C430;color:#08090B;font:700 10px/1 Poppins,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Best value</span></sc-if>
+                <span style="font-family:Boldonse,Poppins,sans-serif;font-size:clamp(22px,2.2vw,28px);line-height:1.1;color:#F3F1EC">{{ s.key }}</span>
+                <span style="font:500 12px/1.2 Poppins,sans-serif;color:#B9BBC0">capsules</span>
+                <span style="margin-top:8px;font:600 13px/1.2 Poppins,sans-serif;color:#F4C430">{{ s.perShort }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <div role="radiogroup" aria-label="Purchase type" style="display:flex;flex-direction:column;gap:8px">
+            <div style="{{ rowSub }}">
+              <button type="button" role="radio" aria-checked="{{ isSub }}" onClick="{{ pickSub }}" style="display:flex;align-items:center;gap:14px;width:100%;min-height:48px;padding:0;background:none;border:0;cursor:pointer;color:inherit;text-align:left">
+                <span style="{{ dotSub }}"></span>
+                <span style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font:600 15px/1.2 Poppins,sans-serif;color:#F3F1EC">Subscribe &amp; save {{ subPct }}</span><span style="font:400 12.5px/1.3 Poppins,sans-serif;color:#9A9DA3">Skip, reschedule or cancel anytime</span></span>
+                <span style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span style="font:700 17px/1 Poppins,sans-serif;color:#F3F1EC">{{ subPrice }}</span><span style="font:500 12.5px/1 Poppins,sans-serif;color:#85888F;text-decoration:line-through">{{ subStrike }}</span></span>
+              </button>
+              <sc-if value="{{ isSub }}" hint-placeholder-val="{{ true }}">
+                <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 2px 34px;font:500 13px/1.2 Poppins,sans-serif;color:#C9CBD0">
+                  <span>Deliver every</span>
+                  <span style="position:relative;display:inline-flex">
+                    <select value="{{ freqVal }}" onChange="{{ freqChange }}" aria-label="Delivery frequency" style="min-height:40px;padding:0 36px 0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:#0C0D10;color:#F3F1EC;font:600 13px/1 Poppins,sans-serif;appearance:none;-webkit-appearance:none;cursor:pointer">
+                      <sc-for list="{{ freqOpts }}" as="f" hint-placeholder-count="4"><option value="{{ f.val }}">{{ f.label }}</option></sc-for>
+                    </select>
+                    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="#F4C430" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </span>
+                </label>
+              </sc-if>
+            </div>
+            <div style="{{ rowOnce }}">
+              <button type="button" role="radio" aria-checked="{{ isOnce }}" onClick="{{ pickOnce }}" style="display:flex;align-items:center;gap:14px;width:100%;min-height:48px;padding:0;background:none;border:0;cursor:pointer;color:inherit;text-align:left">
+                <span style="{{ dotOnce }}"></span>
+                <span style="flex:1;font:600 15px/1.2 Poppins,sans-serif;color:#F3F1EC">One-time purchase</span>
+                <span style="font:700 17px/1 Poppins,sans-serif;color:#F3F1EC">{{ oncePrice }}</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="button" onClick="{{ addToCart }}" style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px;padding:0 10px 0 28px;border:0;border-radius:999px;background:#F4C430;color:#08090B;cursor:pointer;box-shadow:0 14px 44px rgba(244,196,48,.28);transition:background .2s,transform .2s" style-hover="background:#FFD54F;transform:translateY(-1px)">
+            <span style="font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:14px;letter-spacing:.02em;text-align:left">{{ cta }}</span>
+            <span style="flex:none;display:flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:#08090B;color:#F4C430;font:700 15px/1 Poppins,sans-serif">{{ sel.total }}</span>
+          </button>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:0 4px 2px">
+            <sc-if value="{{ shipOn }}"><span style="display:flex;align-items:center;gap:8px;font:500 13px/1.3 Poppins,sans-serif;color:#F3F1EC"><span style="width:6px;height:6px;border-radius:50%;background:#F4C430;flex:none"></span>This order ships free in the US</span></sc-if>
+            <sc-if value="{{ shipOff }}"><span style="display:flex;align-items:center;gap:8px;font:500 13px/1.3 Poppins,sans-serif;color:#C9CBD0"><span style="width:6px;height:6px;border-radius:50%;background:#9A9DA3;flex:none"></span>{{ shipAway }} away from free US shipping</span></sc-if>
+            <p style="margin:0;font:400 12px/1.55 Poppins,sans-serif;color:#9A9DA3">{{ disclosure }}</p>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 22px;font:500 13px/1.3 Poppins,sans-serif;color:#B9BBC0">
+          <span>30-day money-back guarantee</span><span>Made in USA</span><span>GMP-certified facility</span>
+        </div>
+        <p style="margin:0;font:400 15px/1.7 Poppins,sans-serif;color:#A9ACB2;text-wrap:pretty">NZT48 Original is a once-daily nootropic dietary supplement with the 750mg NZT-48™ Blend: caffeine for alertness, plus Alpha GPC, L-Theanine, Bacopaside and 19 more ingredients chosen for focus and mental clarity support.* A dietary supplement, not a drug. It contains caffeine. Results vary, and it isn’t a guaranteed cognitive enhancer.</p>
+      </div>
+    </div>
+    <div aria-hidden="true" style="overflow:hidden;padding:clamp(8px,2vw,24px) 0 clamp(48px,6vw,96px);-webkit-mask-image:linear-gradient(90deg,transparent,#000 24%,#000 76%,transparent);mask-image:linear-gradient(90deg,transparent,#000 24%,#000 76%,transparent)">
+      <div style="display:flex;width:max-content;animation:lxMarq 38s linear infinite">
+        <div style="display:flex;align-items:center;gap:clamp(28px,4vw,64px);padding-right:clamp(28px,4vw,64px);font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:clamp(64px,11vw,184px);line-height:1.3;letter-spacing:-.02em;color:rgba(243,241,236,.13);white-space:nowrap"><span style="flex:none;padding:.12em 0 .2em">The <span style="background:linear-gradient(180deg,rgba(255,229,138,.42) 10%,rgba(244,196,48,.34) 55%,rgba(201,154,18,.22) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.12em .04em .2em">Limitless</span> Pill</span><span style="flex:none;width:clamp(56px,7vw,120px);height:clamp(24px,3vw,50px);border-radius:999px;background:linear-gradient(90deg,#C99A12 0 50%,#F4C430 50%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.25),inset 0 5px 10px rgba(255,240,190,.5);transform:rotate(-18deg);opacity:.35"></span><span style="flex:none;padding:.12em 0 .2em">The <span style="background:linear-gradient(180deg,rgba(255,229,138,.42) 10%,rgba(244,196,48,.34) 55%,rgba(201,154,18,.22) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.12em .04em .2em">Limitless</span> Pill</span><span style="flex:none;width:clamp(56px,7vw,120px);height:clamp(24px,3vw,50px);border-radius:999px;background:linear-gradient(90deg,#C99A12 0 50%,#F4C430 50%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.25),inset 0 5px 10px rgba(255,240,190,.5);transform:rotate(-18deg);opacity:.35"></span><span style="flex:none;padding:.12em 0 .2em">The <span style="background:linear-gradient(180deg,rgba(255,229,138,.42) 10%,rgba(244,196,48,.34) 55%,rgba(201,154,18,.22) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.12em .04em .2em">Limitless</span> Pill</span><span style="flex:none;width:clamp(56px,7vw,120px);height:clamp(24px,3vw,50px);border-radius:999px;background:linear-gradient(90deg,#C99A12 0 50%,#F4C430 50%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.25),inset 0 5px 10px rgba(255,240,190,.5);transform:rotate(-18deg);opacity:.35"></span></div>
+        <div style="display:flex;align-items:center;gap:clamp(28px,4vw,64px);padding-right:clamp(28px,4vw,64px);font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:clamp(64px,11vw,184px);line-height:1.3;letter-spacing:-.02em;color:rgba(243,241,236,.13);white-space:nowrap"><span style="flex:none;padding:.12em 0 .2em">The <span style="background:linear-gradient(180deg,rgba(255,229,138,.42) 10%,rgba(244,196,48,.34) 55%,rgba(201,154,18,.22) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.12em .04em .2em">Limitless</span> Pill</span><span style="flex:none;width:clamp(56px,7vw,120px);height:clamp(24px,3vw,50px);border-radius:999px;background:linear-gradient(90deg,#C99A12 0 50%,#F4C430 50%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.25),inset 0 5px 10px rgba(255,240,190,.5);transform:rotate(-18deg);opacity:.35"></span><span style="flex:none;padding:.12em 0 .2em">The <span style="background:linear-gradient(180deg,rgba(255,229,138,.42) 10%,rgba(244,196,48,.34) 55%,rgba(201,154,18,.22) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.12em .04em .2em">Limitless</span> Pill</span><span style="flex:none;width:clamp(56px,7vw,120px);height:clamp(24px,3vw,50px);border-radius:999px;background:linear-gradient(90deg,#C99A12 0 50%,#F4C430 50%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.25),inset 0 5px 10px rgba(255,240,190,.5);transform:rotate(-18deg);opacity:.35"></span><span style="flex:none;padding:.12em 0 .2em">The <span style="background:linear-gradient(180deg,rgba(255,229,138,.42) 10%,rgba(244,196,48,.34) 55%,rgba(201,154,18,.22) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.12em .04em .2em">Limitless</span> Pill</span><span style="flex:none;width:clamp(56px,7vw,120px);height:clamp(24px,3vw,50px);border-radius:999px;background:linear-gradient(90deg,#C99A12 0 50%,#F4C430 50%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.25),inset 0 5px 10px rgba(255,240,190,.5);transform:rotate(-18deg);opacity:.35"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="serving" data-screen-label="One Capsule" style="position:relative">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,9vw,140px) 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(24px,4vw,56px);align-items:center">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:22px">
+        <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">Nootropics, explained</span>
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4;text-wrap:balance">One capsule is the whole serving</h2>
+        <p style="margin:0;font:400 17px/1.7 Poppins,sans-serif;color:#B9BBC0;text-wrap:pretty">“Nootropic” is a general term for ingredients people take to support focus, attention and mental energy. Many nootropic stacks ask for several capsules a day, or a handful of separate bottles.</p>
+      </div>
+      <div data-nzt-anchor="serving" data-ry="28" data-tilt="0" data-open="0" data-pills="1" data-solo="1" data-fit=".62" style="position:relative;height:min(86vh,780px);min-height:440px;display:flex;align-items:center;justify-content:center">
+        
+        <img data-nzt-fallback="" src="assets/bottle.png" alt="" style="position:relative;height:56%;width:auto;opacity:0;transition:opacity .4s">
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:28px">
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px">
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.2 Poppins,sans-serif;color:#9A9DA3">Serving size</span><span style="font:600 22px/1.2 Poppins,sans-serif">1 capsule</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.2 Poppins,sans-serif;color:#9A9DA3">Per bottle</span><span style="font:600 22px/1.2 Poppins,sans-serif">30 servings</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.2 Poppins,sans-serif;color:#9A9DA3">Blend per capsule</span><span style="font:600 22px/1.2 Poppins,sans-serif">750mg</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.2 Poppins,sans-serif;color:#9A9DA3">Take with</span><span style="font:600 22px/1.2 Poppins,sans-serif">8oz water + a meal</span></div>
+        </div>
+        <p style="margin:0;font:400 17px/1.7 Poppins,sans-serif;color:#B9BBC0;text-wrap:pretty">NZT48 Original puts its 23-ingredient blend into one capsule. You take it once, with water and a meal, and that’s your serving for the day. Nothing to measure, mix or count out.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Benefits" style="position:relative">
+    <div style="max-width:1320px;margin:0 auto;padding:0 24px;display:flex;gap:clamp(24px,5vw,80px)">
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1 1 0;min-width:0;position:relative">
+          <div data-nzt-anchor="benefits" data-ry="-332" data-tilt="-10" data-pills=".3" data-fit=".78" style="position:sticky;top:12vh;height:76vh"></div>
+        </div>
+      </sc-if>
+      <div style="flex:1.1 1 0;min-width:0;display:flex;flex-direction:column;gap:clamp(44px,5vw,72px);padding:clamp(64px,9vw,140px) 0">
+        <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+          <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">What it’s for</span>
+          <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4">Built for four jobs</h2>
+          <p style="margin:0;font:400 17px/1.65 Poppins,sans-serif;color:#B9BBC0;max-width:46ch">Every ingredient in the blend is there for one of these reasons. Here’s what each group is included to support.*</p>
+        </div>
+        <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="4">
+          <div data-reveal="" style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:baseline">
+            <span style="font-family:Boldonse,Poppins,sans-serif;font-size:18px;line-height:1;color:#F4C430">{{ b.n }}</span>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <h3 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(22px,2.2vw,30px);line-height:1.4;color:#F3F1EC">{{ b.t }}</h3>
+              <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#B9BBC0;text-wrap:pretty;max-width:46ch">{{ b.d }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="formula" data-screen-label="Ingredients" style="position:relative;scroll-margin-top:70px">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,9vw,140px) 24px 0;display:flex;flex-direction:column;gap:18px;max-width:1320px">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;max-width:780px">
+        <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">Ingredient deep dive</span>
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4;text-wrap:balance">What’s inside, and what the research says</h2>
+        <p style="margin:0;font:400 17px/1.7 Poppins,sans-serif;color:#B9BBC0;text-wrap:pretty">All 23 ingredients share one 750mg proprietary blend, so the label lists the blend total, not each ingredient’s amount. Published studies usually test a single ingredient at larger amounts than a blend this size can hold. So for each ingredient we describe what it has been studied for, then what we can responsibly say about NZT48 Original.</p>
+      </div>
+    </div>
+    <div style="max-width:1320px;margin:0 auto;padding:0 24px clamp(64px,9vw,140px);display:flex;gap:clamp(24px,5vw,80px)">
+      <div style="flex:1.3 1 0;min-width:0;display:flex;flex-direction:column;gap:clamp(48px,5vw,72px);padding-top:clamp(48px,6vw,80px)">
+        <sc-for list="{{ ingList }}" as="g" hint-placeholder-count="8">
+          <article data-reveal="" style="display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px">
+            <span style="font-family:Boldonse,Poppins,sans-serif;font-size:15px;line-height:1.8;color:#F4C430">{{ g.n }}</span>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <h3 style="margin:0;font:700 clamp(22px,2vw,28px)/1.2 Poppins,sans-serif;color:#F3F1EC">{{ g.name }}</h3>
+                <span style="font:400 14px/1.4 Poppins,sans-serif;color:#9A9DA3">{{ g.what }} · Part of the 750mg blend</span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:18px 32px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font:600 12px/1.3 Poppins,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9A9DA3">What research suggests</span>
+                  <p style="margin:0;font:400 15px/1.6 Poppins,sans-serif;color:#C9CBD0;text-wrap:pretty">{{ g.research }}</p>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font:600 12px/1.3 Poppins,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#F4C430">What we can say</span>
+                  <p style="margin:0;font:500 15px/1.6 Poppins,sans-serif;color:#F3F1EC;text-wrap:pretty">{{ g.say }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+        <p style="margin:0;font:400 14px/1.65 Poppins,sans-serif;color:#9A9DA3"><span style="color:#C9CBD0;font-weight:600">Also in the blend:</span> {{ alsoIn }} Ingredient research is not a study of NZT48 Original as a finished product.</p>
+      </div>
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1 1 0;min-width:0;position:relative">
+          <div data-nzt-anchor="formula" data-ry="-360" data-scrub="140" data-tilt="5" data-fit=".78" style="position:sticky;top:12vh;height:76vh"></div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section data-screen-label="Daily Routine" style="position:relative">
+    <div data-nzt-anchor="exit-1" data-out="right" data-ry="-180" style="position:absolute;top:0;left:100%;width:40vw;height:70vh"></div>
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,9vw,140px) 24px;display:flex;flex-direction:column;gap:clamp(40px,5vw,64px)">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">How to take it</span>
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4">Your daily routine</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(32px,4vw,56px)">
+        <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
+          <div style="position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#111"><img src="assets/photos/p-capsules.webp" alt="Two gold NZT48 capsules" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.05)"><span style="position:absolute;left:18px;bottom:12px;font-family:Boldonse,Poppins,sans-serif;font-size:44px;line-height:1.3;color:#F4C430;text-shadow:0 6px 20px rgba(0,0,0,.5)">01</span></div>
+          <h3 style="margin:0;font:700 22px/1.25 Poppins,sans-serif">Take one capsule</h3>
+          <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#B9BBC0">With 8oz of water, preferably with a meal, or as directed by a healthcare professional.</p>
+        </div>
+        <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
+          <div style="position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#111"><img src="assets/photos/p-topdown.webp" alt="NZT48 Original with water, seen from above" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.05)"><span style="position:absolute;left:18px;bottom:12px;font-family:Boldonse,Poppins,sans-serif;font-size:44px;line-height:1.3;color:#F4C430;text-shadow:0 6px 20px rgba(0,0,0,.5)">02</span></div>
+          <h3 style="margin:0;font:700 22px/1.25 Poppins,sans-serif">Skip the extra caffeine</h3>
+          <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#B9BBC0">NZT48 Original already contains caffeine. The label says to avoid other caffeinated products, including coffee and energy drinks.</p>
+        </div>
+        <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
+          <div style="position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#111"><img src="assets/photos/r-sunlit.webp" alt="Morning light routine with NZT48 Original" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.05)"><span style="position:absolute;left:18px;bottom:12px;font-family:Boldonse,Poppins,sans-serif;font-size:44px;line-height:1.3;color:#F4C430;text-shadow:0 6px 20px rgba(0,0,0,.5)">03</span></div>
+          <h3 style="margin:0;font:700 22px/1.25 Poppins,sans-serif">Take it earlier in the day</h3>
+          <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#B9BBC0">Most people take it in the morning or with lunch, so the caffeine fits their day and their sleep.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demanding-days" data-screen-label="Who It Fits" onMouseLeave="{{ ddRelease }}" style="{{ ddSection }}">
+    <!-- Scene stage: every photo stacked, the active one fades up and slowly pushes in -->
+    <div aria-hidden="true" style="{{ ddStage }}">
+      <sc-for list="{{ scenarios }}" as="u" hint-placeholder-count="8">
+        <img src="{{ u.image }}" alt="" loading="lazy" style="{{ u.imgStyle }}">
+      </sc-for>
+      <div style="{{ ddShade }}"></div>
+    </div>
+    <div style="{{ ddInner }}">
+      <div style="{{ ddLeft }}">
+        <h2 data-reveal="" style="order:-1;margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(34px,5vw,76px);line-height:1.3;letter-spacing:-.01em;max-width:11ch;text-wrap:balance">Made for demanding days</h2>
+        <div role="group" aria-label="Pick a kind of day" style="order:1;display:flex;flex-direction:column">
+          <sc-for list="{{ scenarios }}" as="u" hint-placeholder-count="8">
+            <button type="button" class="dd-row" aria-pressed="{{ u.pressed }}" onMouseEnter="{{ u.hold }}" onFocus="{{ u.hold }}" onClick="{{ u.hold }}" style="{{ u.rowStyle }}">
+              <span style="{{ u.tickStyle }}"><sc-if value="{{ u.on }}"><span style="{{ ddBar }}"></span></sc-if></span>
+              <span style="min-width:0">{{ u.t }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <p style="order:1;margin:0;font:400 14px/1.65 Poppins,sans-serif;color:#9A9DA3;max-width:46ch">For adults 18+. Everyone responds differently, and NZT48 is one part of a routine that also includes sleep, food and movement.</p>
+      </div>
+      <!-- Caption for the active day, pinned to the photo -->
+      <div aria-live="polite" style="{{ ddCaptionWrap }}">
+        <sc-for list="{{ scenarios }}" as="u" hint-placeholder-count="8">
+          <div style="{{ u.capStyle }}">
+            <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#F4C430">{{ u.who }}</span>
+            <p style="margin:0;font:500 clamp(18px,1.7vw,24px)/1.45 Poppins,sans-serif;color:#F3F1EC;max-width:30ch;text-wrap:pretty">{{ u.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Comparison" style="position:relative">
+    <div data-nzt-anchor="exit-2" data-out="right" data-ry="-150" style="position:absolute;bottom:0;left:100%;width:40vw;height:70vh"></div>
+    <div style="max-width:1080px;margin:0 auto;padding:clamp(48px,7vw,112px) 24px;display:flex;flex-direction:column;gap:32px">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">Capsules per labeled serving</span>
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4">Fewer capsules to take</h2>
+        <p style="margin:0;font:400 17px/1.65 Poppins,sans-serif;color:#B9BBC0;max-width:62ch">Here’s how many capsules each brand’s label calls one serving. This compares convenience only. Different formulas aren’t interchangeable, and fewer capsules doesn’t mean better results.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ compare }}" as="r" hint-placeholder-count="3">
+          <div style="{{ r.style }}">
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+              <span style="font:700 18px/1.2 Poppins,sans-serif">{{ r.brand }}</span>
+              <span style="font:400 13px/1.35 Poppins,sans-serif;color:#9A9DA3">{{ r.maker }} · {{ r.note }}</span>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+              <sc-for list="{{ r.pills }}" as="p" hint-placeholder-count="1"><span style="{{ p.style }}"></span></sc-for>
+            </div>
+            <span style="{{ r.capStyle }}">{{ r.caps }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:0;font:400 12.5px/1.6 Poppins,sans-serif;color:#8D9097">Serving sizes taken from each brand’s official product information on October 8, 2026: Onnit Alpha BRAIN® capsules (2 capsules per serving) and Qualia Mind® (6 capsules per serving; the label suggests 3–6). Alpha BRAIN® is a registered trademark of Onnit Labs, Inc. Qualia Mind® is a registered trademark of its owner. Neither brand is affiliated with Limitless X.</p>
+    </div>
+  </section>
+
+  <section id="facts" data-screen-label="Supplement Facts" style="position:relative;scroll-margin-top:70px">
+    <div style="max-width:1320px;margin:0 auto;padding:0 24px;display:flex;gap:clamp(24px,5vw,80px)">
+      <div style="flex:1.2 1 0;min-width:0;display:flex;flex-direction:column;gap:22px;padding:clamp(64px,9vw,140px) 0">
+        <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+          <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">Full transparency</span>
+          <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4">The label, in full</h2>
+          <p style="margin:0;font:400 17px/1.7 Poppins,sans-serif;color:#B9BBC0">The complete Supplement Facts panel for NZT48 Original, 30 capsules. The 60 and 90 options are two and three of this same bottle.</p>
+        </div>
+        <div data-reveal="" style="background:#F7F5EF;color:#000;border-radius:24px;padding:clamp(20px,3vw,32px);font-family:Helvetica,Arial,sans-serif;max-width:560px;width:100%;box-shadow:0 40px 90px rgba(0,0,0,.5)">
+          <div style="font-weight:900;font-size:clamp(30px,4vw,40px);line-height:1;letter-spacing:-.01em">Supplement Facts</div>
+          <div style="font-weight:700;font-size:15px;line-height:1.35;margin-top:6px">Serving Size 1 Capsule<br>Servings Per Container 30</div>
+          <div style="height:10px;background:#000;margin:10px 0 6px"></div>
+          <div style="display:flex;justify-content:space-between;font-weight:800;font-size:14px"><span>Amount Per Capsule</span><span>% Daily Value**</span></div>
+          <div style="height:5px;background:#000;margin:6px 0 8px"></div>
+          <div style="display:grid;grid-template-columns:1fr auto 28px;gap:8px;font-weight:800;font-size:15px"><span>NZT-48™ Blend</span><span>750 mg</span><span style="text-align:right">†</span></div>
+          <p style="margin:6px 0 0;font-size:14px;line-height:1.45">{{ blendText }}</p>
+          <div style="height:10px;background:#000;margin:12px 0 8px"></div>
+          <p style="margin:0;font-size:12px;line-height:1.45">**Percent Daily Values are based on a 2,000 calorie diet.<br>†Daily Value not established.</p>
+          <p style="margin:12px 0 0;font-size:12.5px;line-height:1.45"><strong>Ingredients:</strong> Gelatin, White #100, Silica, Calcium Carbonate.</p>
+          <p style="margin:6px 0 0;font-size:12.5px;line-height:1.45"><strong>Allergy Information:</strong> Manufactured in a facility that processes milk, soy, and egg protein.</p>
+        </div>
+        <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px;max-width:640px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font:600 12px/1.3 Poppins,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#F4C430">Warning</span>
+            <p style="margin:0;font:400 14px/1.6 Poppins,sans-serif;color:#C9CBD0">{{ warning }}</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font:600 12px/1.3 Poppins,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#F4C430">How to use</span>
+            <p style="margin:0;font:400 14px/1.6 Poppins,sans-serif;color:#C9CBD0">Take 1 capsule daily with 8oz of water, preferably with a meal or as directed by a healthcare professional.</p>
+          </div>
+        </div>
+      </div>
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1 1 0;min-width:0;position:relative">
+          <div data-nzt-anchor="facts" data-ry="{{ factsRy }}" data-tilt="0" data-fit=".8" style="position:sticky;top:12vh;height:76vh"></div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section data-screen-label="Reviews" style="position:relative">
+    <div data-nzt-anchor="exit-3" data-out="right" data-ry="-60" style="position:absolute;top:0;left:100%;width:40vw;height:70vh"></div>
+    <div data-reveal="" style="max-width:1320px;margin:0 auto;padding:clamp(56px,8vw,112px) 24px;display:flex;flex-wrap:wrap;gap:32px 64px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:clamp(18px,3vw,32px)">
+        <span style="font-family:Boldonse,Poppins,sans-serif;font-size:clamp(84px,11vw,160px);line-height:1.3;background:linear-gradient(180deg,#FFE58A,#F4C430 55%,#B8860B);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.08em .06em .14em;display:inline-block">{{ rating }}</span>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="color:#F4C430;font-size:22px;letter-spacing:3px">★★★★★</span>
+          <span style="font:600 19px/1.3 Poppins,sans-serif">Average rating from {{ reviewCount }} reviews</span>
+          <span style="font:400 14px/1.4 Poppins,sans-serif;color:#9A9DA3">Reviews of NZT48 Original on limitlessx.com</span>
+        </div>
+      </div>
+      <a href="https://www.limitlessx.com/products/nzt-48" style="display:inline-flex;align-items:center;min-height:52px;padding:0 26px;border-radius:999px;background:rgba(255,255,255,.07);color:#F3F1EC;text-decoration:none;font:600 14px/1 Poppins,sans-serif;transition:background .2s" style-hover="background:rgba(244,196,48,.18);color:#F3F1EC">Read all reviews</a>
+      <sc-if value="{{ internal }}" hint-placeholder-val="{{ false }}">
+        <div style="flex-basis:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px">
+          <div style="padding:22px;border:2px dashed rgba(244,196,48,.5);border-radius:16px;font:500 14px/1.5 Poppins,sans-serif;color:#F4C430">INTERNAL PLACEHOLDER: approved NZT48 Original review quote 1. Hidden on the live page.</div>
+          <div style="padding:22px;border:2px dashed rgba(244,196,48,.5);border-radius:16px;font:500 14px/1.5 Poppins,sans-serif;color:#F4C430">INTERNAL PLACEHOLDER: approved NZT48 Original review quote 2. Hidden on the live page.</div>
+          <div style="padding:22px;border:2px dashed rgba(244,196,48,.5);border-radius:16px;font:500 14px/1.5 Poppins,sans-serif;color:#F4C430">INTERNAL PLACEHOLDER: approved UGC photo or video. Hidden on the live page.</div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section data-screen-label="Bundles" style="position:relative">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(48px,7vw,112px) 24px;display:flex;flex-direction:column;gap:36px">
+      <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">Pick your supply</span>
+          <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4">Same capsule, three sizes</h2>
+        </div>
+        <div role="radiogroup" aria-label="Purchase type" style="display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,255,255,.06);min-width:min(100%,360px)">
+          <button type="button" role="radio" aria-checked="{{ isSub }}" onClick="{{ pickSub }}" style="{{ segSub }}">Subscribe &amp; save</button>
+          <button type="button" role="radio" aria-checked="{{ isOnce }}" onClick="{{ pickOnce }}" style="{{ segOnce }}">One-time</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;align-items:stretch">
+        <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="3">
+          <div onClick="{{ s.pick }}" style="{{ s.tier }}">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:26px">
+              <span style="font:600 12px/1 Poppins,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#F4C430">{{ s.tag }}</span>
+              <sc-if value="{{ s.savePct }}"><span style="padding:7px 11px;border-radius:999px;background:#F4C430;color:#08090B;font:700 11px/1 Poppins,sans-serif">{{ s.savePct }}</span></sc-if>
+            </div>
+            <div style="position:relative;height:230px;display:flex;align-items:flex-end;justify-content:center">
+              <img src="{{ s.packshot }}" alt="{{ s.packshotAlt }}" width="1400" height="1400" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 26px 26px rgba(0,0,0,.65))">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <h3 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:22px;line-height:1.4">{{ s.caps }}</h3>
+              <span style="font:400 14px/1.4 Poppins,sans-serif;color:#9A9DA3">{{ s.title }} · {{ s.supply }}</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <span style="font:700 34px/1 Poppins,sans-serif">{{ s.total }}</span>
+              <sc-if value="{{ s.hasStrike }}"><span style="font:500 15px/1 Poppins,sans-serif;color:#85888F;text-decoration:line-through">{{ s.singles }}</span></sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font:500 13px/1.3 Poppins,sans-serif;color:#B9BBC0">
+              <span>{{ s.perCap }}</span><span>{{ s.ship }}</span>
+            </div>
+            <button type="button" onClick="{{ s.add }}" style="margin-top:auto;min-height:54px;border:0;border-radius:999px;background:#F4C430;color:#08090B;cursor:pointer;font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:13px;transition:background .2s" style-hover="background:#FFD54F">Add to cart</button>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:0;font:400 13px/1.6 Poppins,sans-serif;color:#8D9097">Savings are compared with buying single 30-capsule bottles at $59.95 each. {{ disclosure }}</p>
+    </div>
+  </section>
+
+  <section data-screen-label="Subscribe vs One-Time" style="position:relative">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(32px,5vw,72px) 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:clamp(26px,4vw,44px);border-radius:30px;background:linear-gradient(150deg,#FFD650,#F4C430 45%,#D9A514);color:#08090B">
+        <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase">Subscribe &amp; save</span>
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(26px,3vw,40px);line-height:1.4">Save up to 20% on every order</h2>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;font:600 15px/1.3 Poppins,sans-serif"><span>Every 30 days</span><span>20% off</span></div>
+          <div style="display:flex;justify-content:space-between;font:600 15px/1.3 Poppins,sans-serif"><span>Every 45, 60 or 90 days</span><span>15% off</span></div>
+        </div>
+        <p style="margin:0;font:400 14.5px/1.6 Poppins,sans-serif">Your subscription renews automatically at the price and frequency you choose until you cancel. You’re charged when each order is placed. Skip, reschedule or cancel anytime from your account.</p>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:clamp(26px,4vw,44px);border-radius:30px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015))">
+        <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">One-time purchase</span>
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(26px,3vw,40px);line-height:1.4">Buy once, no commitment</h2>
+        <p style="margin:0;font:400 15px/1.65 Poppins,sans-serif;color:#C9CBD0">Pay $59.95, $79.95 or $94.95 for 30, 60 or 90 capsules. No future charges. Orders of $70 or more ship free within the US.</p>
+        <p style="margin:0;font:400 15px/1.65 Poppins,sans-serif;color:#C9CBD0">Both options are covered by the same 30-day money-back guarantee.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Guarantee" style="position:relative">
+    <div data-reveal="" style="max-width:1080px;margin:0 auto;padding:clamp(48px,7vw,96px) 24px;display:flex;flex-wrap:wrap;gap:36px;align-items:center">
+      <div style="flex:none;width:148px;height:148px;border-radius:50%;padding:2px;background:conic-gradient(from 200deg,#FFE58A,#B8860B,#F4C430,#FFE58A)">
+        <div style="width:100%;height:100%;border-radius:50%;background:#0B0C0F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+          <span style="font-family:Boldonse,Poppins,sans-serif;font-size:42px;line-height:1;color:#F4C430">30</span>
+          <span style="font:600 11px/1 Poppins,sans-serif;letter-spacing:.16em;color:#C9CBD0">DAY GUARANTEE</span>
+        </div>
+      </div>
+      <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:12px">
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(24px,3vw,38px);line-height:1.4">30-day money-back guarantee</h2>
+        <p style="margin:0;font:400 16px/1.65 Poppins,sans-serif;color:#C9CBD0">If NZT48 Original isn’t right for you, contact our support team within 30 days for a refund under our <a href="../../pages/returns-exchanges/index.html">Returns Policy</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" data-screen-label="FAQ" style="position:relative;scroll-margin-top:70px">
+    <div data-nzt-anchor="exit-4" data-out="right" data-ry="-200" style="position:absolute;bottom:0;left:100%;width:40vw;height:70vh"></div>
+    <div style="max-width:960px;margin:0 auto;padding:clamp(56px,8vw,120px) 24px;display:flex;flex-direction:column;gap:32px">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:600 12px/1.4 Poppins,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F4C430">FAQ</span>
+        <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,3.6vw,52px);line-height:1.4">Questions, answered</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="8">
+          <div style="border-radius:20px;background:rgba(255,255,255,.04)">
+            <button type="button" onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px 18px 24px;min-height:60px;background:none;border:0;cursor:pointer;color:#F3F1EC;text-align:left;font:600 16.5px/1.4 Poppins,sans-serif">
+              <span>{{ f.q }}</span><span style="flex:none;width:34px;height:34px;border-radius:50%;background:rgba(244,196,48,.12);display:flex;align-items:center;justify-content:center;font:400 20px/1 Poppins,sans-serif;color:#F4C430">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}"><p style="margin:0;padding:0 72px 22px 24px;font:400 15.5px/1.7 Poppins,sans-serif;color:#C9CBD0;text-wrap:pretty">{{ f.a }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Final CTA" style="position:relative">
+    <div style="max-width:1080px;margin:0 auto;padding:clamp(24px,4vw,56px) 24px clamp(72px,9vw,128px);display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center">
+      <div data-nzt-anchor="final" data-ry="-20" data-tilt="-6" data-open="0" data-pills="1" data-bottling="1" data-fit=".6" style="position:relative;width:100%;height:min(70vh,640px);min-height:380px;display:flex;align-items:center;justify-content:center">
+        <img data-nzt-fallback="" src="assets/bottle.png" alt="" style="height:56%;width:auto;opacity:0;transition:opacity .4s">
+      </div>
+      <h2 style="margin:0;font-family:Boldonse,Poppins,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(34px,5.2vw,76px);line-height:1.4;text-wrap:balance">Start with one capsule</h2>
+      <p style="margin:0;font:400 17px/1.6 Poppins,sans-serif;color:#C9CBD0;max-width:52ch">NZT48 Original, The Limitless Pill. One capsule a day, a fully listed blend, and a 30-day money-back guarantee.</p>
+      <a href="#buy" style="display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 38px;border-radius:999px;background:#F4C430;color:#08090B;text-decoration:none;font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:15px;box-shadow:0 14px 44px rgba(244,196,48,.28);transition:background .2s" style-hover="background:#FFD54F;color:#08090B">{{ cta }}</a>
+    </div>
+  </section>
+
+  <footer style="position:relative;padding:24px 24px clamp(16px,2.4vw,32px);overflow:hidden">
+    <div style="max-width:1272px;margin:40px auto 0;display:flex;flex-direction:column;gap:14px;font:400 12.5px/1.6 Poppins,sans-serif;color:#8D9097">
+      <img src="assets/logo-limitlessx.svg" alt="Limitless X" style="height:18px;width:auto;align-self:flex-start;filter:invert(1);opacity:.7">
+      <p style="margin:0">{{ fda }}</p>
+      <p style="margin:0">“The Limitless Pill” is a Limitless X campaign name for NZT48 Original. NZT48 is not affiliated with, sponsored by or endorsed by any film, television production, studio or actor. Individual results vary.</p>
+      <p style="margin:0">© 2026 Limitless X · <a href="../../pages/returns-exchanges/index.html">Returns Policy</a></p>
+    </div>
+    <svg data-wordmark="" aria-hidden="true" viewBox="0 -150 1000 155" style="display:block;width:100%;max-width:1272px;height:auto;margin:clamp(40px,6vw,88px) auto 0;overflow:visible;user-select:none"><defs><linearGradient id="lxWordmarkFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4C430" stop-opacity=".55"></stop><stop offset="1" stop-color="#F4C430" stop-opacity=".04"></stop></linearGradient></defs><text x="0" y="0" font-family="Boldonse, Poppins, sans-serif" font-size="200" fill="url(#lxWordmarkFill)">LIMITLESS</text></svg>
+  </footer>
+
+  <sc-if value="{{ showSticky }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:50;padding:8px 8px 8px 20px;border-radius:999px;background:rgba(20,21,26,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.5);display:flex;align-items:center;gap:12px">
+      <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+        <span style="font:600 14px/1.2 Poppins,sans-serif">{{ sel.caps }} · {{ sel.total }}</span>
+        <span style="font:500 12px/1.2 Poppins,sans-serif;color:#9A9DA3">{{ sel.perCap }} per capsule</span>
+      </div>
+      <button type="button" onClick="{{ addToCart }}" style="margin-left:auto;flex:none;min-height:50px;padding:0 22px;border:0;border-radius:999px;background:#F4C430;color:#08090B;cursor:pointer;font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:12px">Add to cart</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCart }}" style="position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;justify-content:flex-end">
+      <aside onClick="{{ stop }}" role="dialog" aria-label="Cart" style="width:min(100%,420px);height:100%;background:#0F1014;display:flex;flex-direction:column;overflow:auto;box-shadow:-30px 0 80px rgba(0,0,0,.5)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 22px">
+          <span style="font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:16px">Your cart</span>
+          <button type="button" onClick="{{ closeCart }}" aria-label="Close cart" style="width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.07);color:#F3F1EC;cursor:pointer;font-size:20px">×</button>
+        </div>
+        <div style="padding:8px 22px 22px;display:flex;flex-direction:column;gap:18px;flex:1">
+          <div style="display:flex;gap:14px;align-items:center">
+            <div style="flex:none;width:76px;height:76px;border-radius:18px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center"><img src="{{ still }}" alt="" style="height:64px;width:auto"></div>
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+              <span style="font:700 15px/1.3 Poppins,sans-serif">{{ cart.title }}</span>
+              <span style="font:400 13px/1.3 Poppins,sans-serif;color:#9A9DA3">{{ cart.sub }}</span>
+              <span style="font:500 12.5px/1.3 Poppins,sans-serif;color:#F4C430">{{ cart.plan }}</span>
+            </div>
+            <span style="margin-left:auto;font:700 16px/1 Poppins,sans-serif">{{ cart.total }}</span>
+          </div>
+          <sc-if value="{{ canUp }}">
+            <button type="button" onClick="{{ cartUp }}" style="min-height:48px;padding:12px 16px;border-radius:16px;border:0;background:rgba(244,196,48,.1);color:#F4C430;cursor:pointer;font:600 13px/1.35 Poppins,sans-serif;text-align:left">{{ upLabel }}</button>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:10px;padding-top:6px;font:500 14px/1.3 Poppins,sans-serif">
+            <div style="display:flex;justify-content:space-between"><span style="color:#9A9DA3">Subtotal</span><span>{{ cart.total }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9A9DA3">Shipping</span><span>{{ cart.ship }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#9A9DA3">Tax</span><span>Calculated at checkout</span></div>
+          </div>
+          <p style="margin:0;font:400 12px/1.55 Poppins,sans-serif;color:#9A9DA3">{{ disclosure }}</p>
+          <button type="button" onClick="{{ checkout }}" style="min-height:58px;border:0;border-radius:999px;background:#F4C430;color:#08090B;cursor:pointer;font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;font-size:14px">Secure checkout</button>
+          <sc-if value="{{ notice }}">
+            <div style="padding:14px;border-radius:14px;background:rgba(255,255,255,.05);font:400 13px/1.5 Poppins,sans-serif;color:#C9CBD0">Preview build: checkout is turned off. On the live store this button sends the selected variant and subscription plan to Shopify checkout.</div>
+          </sc-if>
+        </div>
+      </aside>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ctaLabel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Get The Limitless Pill&quot;,&quot;Add To Cart&quot;,&quot;Start With One Capsule&quot;],&quot;default&quot;:&quot;Get The Limitless Pill&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;CRO tests&quot;},&quot;defaultPlan&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;subscribe&quot;,&quot;one-time&quot;],&quot;default&quot;:&quot;subscribe&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;CRO tests&quot;},&quot;defaultSize&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;30&quot;,&quot;60&quot;,&quot;90&quot;],&quot;default&quot;:&quot;30&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;CRO tests&quot;},&quot;showInternal&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Internal review&quot;}}">
+class Component extends DCLogic {
+  state = {};
+  T = {
+    size: (sel) => ({ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', padding: '18px 8px 14px', minHeight: '44px', borderRadius: '20px', cursor: 'pointer', textAlign: 'center', minWidth: 0, color: '#F3F1EC', background: sel ? 'rgba(244,196,48,.10)' : 'rgba(255,255,255,.035)', border: '1.5px solid ' + (sel ? '#F4C430' : 'rgba(255,255,255,.06)'), transition: 'border-color .2s, background .2s' }),
+    tier: (sel, best) => ({ position: 'relative', display: 'flex', flexDirection: 'column', gap: '18px', padding: '26px', borderRadius: '30px', cursor: 'pointer', background: best ? 'linear-gradient(170deg,rgba(244,196,48,.16),rgba(255,255,255,.02) 60%)' : 'linear-gradient(170deg,rgba(255,255,255,.06),rgba(255,255,255,.015) 60%)', boxShadow: sel ? '0 0 0 1.5px #F4C430, 0 30px 70px rgba(0,0,0,.4)' : '0 0 0 1px rgba(255,255,255,.06)', transition: 'box-shadow .25s' }),
+    seg: (on) => ({ flex: '1 1 0', minHeight: '44px', border: 0, borderRadius: '999px', cursor: 'pointer', font: '600 13px/1.2 Poppins, sans-serif', padding: '6px 14px', background: on ? '#F3F1EC' : 'transparent', color: on ? '#08090B' : '#C9CBD0', transition: 'background .2s, color .2s' }),
+    freq: () => ({}),
+    dot: () => ({}),
+    plan: (on) => ({ padding: '10px 16px', borderRadius: '20px', background: on ? 'rgba(244,196,48,.09)' : 'rgba(255,255,255,.035)', border: '1.5px solid ' + (on ? '#F4C430' : 'rgba(255,255,255,.06)'), transition: 'border-color .2s, background .2s' }),
+    radio: (on) => ({ flex: 'none', width: '20px', height: '20px', borderRadius: '50%', border: '2px solid ' + (on ? '#F4C430' : 'rgba(255,255,255,.3)'), background: on ? 'radial-gradient(circle,#F4C430 0 4px,transparent 4.5px)' : 'transparent', transition: 'border-color .2s' }),
+    bottle: (i, n) => { const d = i - (n - 1) / 2; return { position: 'absolute', bottom: 0, left: '50%', height: (n === 1 ? 228 : 206) + 'px', width: 'auto', transform: 'translateX(calc(-50% + ' + (d * 64) + 'px)) rotate(' + (d * 6) + 'deg)', zIndex: String(10 - Math.abs(Math.round(d * 2))), filter: 'drop-shadow(0 22px 24px rgba(0,0,0,.6))' }; },
+    cmp: (us) => ({ display: 'grid', gridTemplateColumns: 'minmax(0,1.3fr) minmax(0,1fr) auto', gap: '16px', alignItems: 'center', padding: '22px 24px', borderRadius: '22px', color: '#F3F1EC', background: us ? 'linear-gradient(90deg,rgba(244,196,48,.16),rgba(244,196,48,.04))' : 'rgba(255,255,255,.035)', boxShadow: us ? '0 0 0 1px rgba(244,196,48,.4)' : 'none' }),
+    cmpCaps: (us) => ({ fontFamily: 'Boldonse, Poppins, sans-serif', fontSize: '38px', lineHeight: 1, color: us ? '#F4C430' : '#F3F1EC', minWidth: '44px', textAlign: 'right' }),
+    pill: (us) => ({ width: '34px', height: '15px', borderRadius: '999px', background: us ? 'linear-gradient(180deg,#FFE9A0 0%,#F4C430 40%,#B8860B 100%)' : 'linear-gradient(180deg,#7A7D84 0%,#4A4C52 50%,#2E3034 100%)', boxShadow: us ? '0 4px 12px rgba(244,196,48,.35)' : 'none' }),
+    shipBar: () => ({})
+  };
+  componentDidMount() {
+    this._r = () => this.forceUpdate();
+    window.addEventListener('nzt48-ready', this._r);
+    window.addEventListener('nzt-still', this._r);
+    this._on = () => this.setState({ scrolled: window.scrollY > 700, w: window.innerWidth });
+    window.addEventListener('scroll', this._on, { passive: true }); window.addEventListener('resize', this._on); this._on();
+    // Demanding days: advance every 5s while the section is on screen and nobody is pointing at a row.
+    this._ddAt = Date.now();
+    this._dd = setInterval(() => {
+      const s = document.getElementById('demanding-days'), r = s && s.getBoundingClientRect();
+      const live = r && r.bottom > 0 && r.top < innerHeight && !document.hidden && !this.state.ddHold && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!live) { this._ddAt = Date.now(); return; }
+      if (Date.now() - this._ddAt >= 5000) { this._ddAt = Date.now(); this.setState({ dd: ((this.state.dd || 0) + 1) % 8 }); }
+    }, 250);
+    const go = () => { if (!window.NZT48) return setTimeout(go, 50); window.NZT48.utm(); window.NZT48.track('PageView', { version: 'v1-high-tech' }); window.NZT48.track('ViewContent', { content_ids: [45002639769902, 45002639802670, 45002639835438] }); this.forceUpdate(); };
+    go();
+    // Fit the footer wordmark's viewBox to its actual glyph box so it spans the content width edge to edge.
+    const fitMark = () => { const svg = document.querySelector('[data-wordmark]'); if (!svg) return; const t = svg.querySelector('text'), g = document.createElement('canvas').getContext('2d'); g.font = '200px Boldonse'; const m = g.measureText('LIMITLESS'); const l = m.actualBoundingBoxLeft, w = l + m.actualBoundingBoxRight, a = m.actualBoundingBoxAscent, d = m.actualBoundingBoxDescent; if (!(w > 0 && a > 0)) return; t.setAttribute('x', String(l)); svg.setAttribute('viewBox', '0 ' + (-a).toFixed(2) + ' ' + w.toFixed(2) + ' ' + (a + d).toFixed(2)); };
+    (document.fonts ? document.fonts.load('200px Boldonse').then(fitMark, fitMark) : Promise.resolve()).then(fitMark); setTimeout(fitMark, 1500);
+    import('./3d/nzt-stage.js?v=v2-20261017d').then(m => { if (!this._dead) this._stage = m.mountStage({ base: './3d/' }); }).catch(e => console.warn('NZT stage failed to load', e));
+  }
+  componentWillUnmount() {
+    this._dead = true;
+    window.removeEventListener('nzt48-ready', this._r); window.removeEventListener('nzt-still', this._r);
+    window.removeEventListener('scroll', this._on); window.removeEventListener('resize', this._on);
+    clearInterval(this._dd);
+    if (this._stage) this._stage.dispose();
+  }
+  renderVals() {
+    const N = window.NZT48;
+    if (!N) return {};
+    const v = N.vals(this, this.T);
+    const size = this.state.size || this.props.defaultSize || '30';
+    const freq = v.sel.freq;
+    const sc = N.calc(size, 'sub', freq), oc = N.calc(size, 'once', freq);
+    v.sizes.forEach(s => {
+      s.perShort = s.perCap.replace(' / capsule', ' / cap');
+      const count = s.bottles.length;
+      s.packshot = 'assets/photos/size-' + s.key + '.webp';
+      s.packshotAlt = count + (count === 1 ? ' NZT48 bottle' : ' NZT48 bottles');
+    });
+    const SCN = ['r-diagonal', 'l-twohands', 'm-shoulder', 'r-closeup', 'l-morning', 'm-strength', 'l-kitchen', 'r-stretch'];
+    const dd = this.state.dd || 0, held = !!this.state.ddHold, wide = v.wide, ease = 'cubic-bezier(.2,.7,.2,1)';
+    v.scenarios = v.scenarios.map((u, i) => {
+      const on = i === dd;
+      return Object.assign({}, u, {
+        image: 'assets/photos/' + SCN[i % SCN.length] + '.webp', on, pressed: on ? 'true' : 'false',
+        hold: () => { this._ddAt = Date.now(); if (!on || !held) this.setState({ dd: i, ddHold: true }); },
+        imgStyle: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 35%', opacity: on ? 1 : 0, transform: on ? 'scale(1)' : 'scale(1.09)', filter: 'brightness(.92) saturate(.92)', transition: 'opacity 1.1s ' + ease + ', transform 6s ' + ease },
+        rowStyle: { fontSize: wide ? 'clamp(17px,1.7vw,27px)' : '16px', color: on ? '#F4C430' : 'rgba(243,241,236,.34)', transform: on ? 'translateX(8px)' : 'none' },
+        tickStyle: { position: 'relative', flex: 'none', overflow: 'hidden', height: '2px', width: on ? (wide ? '56px' : '36px') : '14px', background: on ? 'rgba(244,196,48,.28)' : 'rgba(243,241,236,.22)', transition: 'width .45s ' + ease },
+        capStyle: { gridArea: '1 / 1', display: 'flex', flexDirection: 'column', gap: '12px', pointerEvents: 'none', opacity: on ? 1 : 0, transform: on ? 'none' : 'translateY(14px)', filter: on ? 'none' : 'blur(6px)', transition: 'opacity .7s ' + ease + ', transform .7s ' + ease + ', filter .7s ' + ease }
+      });
+    });
+    const photoH = 'min(118vw, 640px)';
+    Object.assign(v, {
+      ddRelease: () => { this._ddAt = Date.now(); if (held) this.setState({ ddHold: false }); },
+      ddSection: { position: 'relative', overflow: 'hidden', background: '#08090B', minHeight: wide ? 'clamp(660px, 94vh, 920px)' : 'auto', display: 'flex' },
+      ddStage: wide ? { position: 'absolute', top: 0, right: 0, bottom: 0, width: '64%', overflow: 'hidden' } : { position: 'absolute', top: 0, left: 0, right: 0, height: photoH, overflow: 'hidden' },
+      ddShade: { position: 'absolute', inset: 0, background: wide
+        ? 'linear-gradient(90deg,#08090B 0%,rgba(8,9,11,.82) 16%,rgba(8,9,11,.25) 46%,rgba(8,9,11,0) 70%),linear-gradient(0deg,rgba(8,9,11,.92) 0%,rgba(8,9,11,0) 42%),linear-gradient(180deg,#08090B 0%,rgba(8,9,11,0) 16%)'
+        : 'linear-gradient(180deg,rgba(8,9,11,.35) 0%,rgba(8,9,11,0) 30%,rgba(8,9,11,.7) 66%,#08090B 100%)' },
+      ddInner: wide
+        ? { position: 'relative', zIndex: 1, width: '100%', maxWidth: '1320px', margin: '0 auto', padding: 'clamp(72px,9vw,140px) 24px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: '48px', alignItems: 'end' }
+        : { position: 'relative', zIndex: 1, width: '100%', padding: 'calc(' + photoH + ' - 190px) 20px 72px', display: 'flex', flexDirection: 'column', gap: '28px' },
+      ddCaptionWrap: wide ? { display: 'grid', justifySelf: 'end', alignSelf: 'end', paddingBottom: '6px' } : { display: 'grid', order: 0 },
+      ddLeft: wide ? { display: 'flex', flexDirection: 'column', gap: 'clamp(28px,3.4vw,44px)', minWidth: 0 } : { display: 'contents' },
+      ddBar: { position: 'absolute', inset: 0, background: '#F4C430', transformOrigin: 'left', animation: held ? 'none' : 'dd-run 5s linear forwards' }
+    });
+    return Object.assign(v, {
+      subPrice: N.money(sc.total), subStrike: N.money(sc.v.price), subPct: sc.p.pct + '%', oncePrice: N.money(oc.total),
+      rowSub: this.T.plan(v.isSub), rowOnce: this.T.plan(v.isOnce), dotSub: this.T.radio(v.isSub), dotOnce: this.T.radio(v.isOnce),
+      freqVal: String(freq),
+      freqOpts: N.PLANS.map(p => ({ val: String(p.days), label: p.days + ' days · ' + p.pct + '% off' })),
+      freqChange: (e) => { const d = +e.target.value; this.setState({ freq: d }); N.track('SelectFrequency', { days: d }); },
+      ingList: v.ingredients.map((g, i) => Object.assign({ n: String(i + 1).padStart(2, '0') }, g)),
+      narrow: !v.wide,
+      still: window.__nztStill || 'assets/bottle.png',
+      factsRy: this.props.factsAngle ?? -114
+    });
+  }
+}
+</script>
+</body>
+</html>
