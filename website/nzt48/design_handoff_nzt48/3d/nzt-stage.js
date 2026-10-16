@@ -3,9 +3,9 @@
 // Anchor attributes: data-ry (yaw deg), data-tilt (roll deg), data-open (0-1 cap), data-pills (0-1),
 // data-fit (bottle height / slot height), data-scrub (extra yaw deg across the slot's parent), data-out="right".
 import * as THREE from './vendor/three.module.min.js';
-import { setupNZTStudio } from './studio-lighting.js';
-import { loadNZT } from './nzt-model.js';
-import { setupGoldStudio } from './gold-studio.js';
+import { setupNZTStudio } from './studio-lighting.js?v=v2-20261017d';
+import { loadNZT } from './nzt-model.js?v=v2-20261017d';
+import { setupGoldStudio } from './gold-studio.js?v=v2-20261017d';
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -222,7 +222,7 @@ export function mountStage(opts = {}) {
     const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, toneMapped: false }));
     shadow.renderOrder = -1; scene.add(shadow);
     cleanup.push(() => { shadow.geometry.dispose(); shadow.material.dispose(); shadowTex.dispose(); }); camera.lookAt(0, 0, 0);
-    const product = await loadNZT(scene, { bottleUrl: base + 'nzt48-bottle-cap-v2.glb', pillUrl: base + 'nzt48-gold-pill-pbr.glb' });
+    const product = await loadNZT(scene, { bottleUrl: base + 'nzt48-bottle-cap-v2.glb?v=v2-20261017d', pillUrl: base + 'nzt48-gold-pill-pbr.glb' });
     if (!alive) { product.dispose(); studio.dispose(); renderer.dispose(); return null; }
     const bottleEnv = scene.environment;
     const goldStudio = setupGoldStudio(renderer, scene);

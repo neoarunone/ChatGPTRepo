@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.min.js';
 import { GLTFLoader } from './vendor/addons/loaders/GLTFLoader.js';
-import { applyNZTStudioMaterials } from './studio-lighting.js';
+import { applyNZTStudioMaterials } from './studio-lighting.js?v=v2-20261017d';
 
 /** Static model loader. No AnimationMixer, embedded clips, or running timeline.
  * All positions are meters; animate the returned groups with your own code.

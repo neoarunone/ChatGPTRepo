@@ -564,7 +564,7 @@ class Component extends DCLogic {
     // Fit the footer wordmark's viewBox to its actual glyph box so it spans the content width edge to edge.
     const fitMark = () => { const svg = document.querySelector('[data-wordmark]'); if (!svg) return; const t = svg.querySelector('text'), g = document.createElement('canvas').getContext('2d'); g.font = '200px Boldonse'; const m = g.measureText('LIMITLESS'); const l = m.actualBoundingBoxLeft, w = l + m.actualBoundingBoxRight, a = m.actualBoundingBoxAscent, d = m.actualBoundingBoxDescent; if (!(w > 0 && a > 0)) return; t.setAttribute('x', String(l)); svg.setAttribute('viewBox', '0 ' + (-a).toFixed(2) + ' ' + w.toFixed(2) + ' ' + (a + d).toFixed(2)); };
     (document.fonts ? document.fonts.load('200px Boldonse').then(fitMark, fitMark) : Promise.resolve()).then(fitMark); setTimeout(fitMark, 1500);
-    import('./3d/nzt-stage.js?v=bolts-20261017c').then(m => { if (!this._dead) this._stage = m.mountStage({ base: './3d/' }); }).catch(e => console.warn('NZT stage failed to load', e));
+    import('./3d/nzt-stage.js?v=v2-20261017d').then(m => { if (!this._dead) this._stage = m.mountStage({ base: './3d/' }); }).catch(e => console.warn('NZT stage failed to load', e));
   }
   componentWillUnmount() {
     this._dead = true;
