@@ -15,7 +15,8 @@ const wrapPi = a => a - TAU * Math.round(a / TAU);
 
 // One physical scale per viewport. Scroll changes position and orientation only.
 export function stageBottleHeight(width, height) {
-  return Math.min(360, height * .39, width * (width < 820 ? .43 : .27));
+  if (width < 820) return Math.min(height * .5, width * .8, 440); // phones: about 1.8x the old size, the bottle leads the screen
+  return Math.min(360, height * .39, width * .27);
 }
 
 const VERT = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
@@ -182,6 +183,12 @@ export function mountStage(opts = {}) {
     const A = readAnchors();
     if (!A.length) return null;
     const vc = innerHeight / 2, L = A[A.length - 1];
+    if (innerWidth < 820) { // phones: no side room to travel through, so the bottle lives in its nearest slot and scrolls with it
+      let n = A[0]; for (const s of A) if (Math.abs(s.cy - vc) < Math.abs(n.cy - vc)) n = s;
+      const o = { h: stageBottleHeight(innerWidth, innerHeight), tilt: n.tilt, open: n.open, pills: n.pills, solo: n.solo, arm: n.arm, bottle: n.bottle, glow: n.glow };
+      o.ry = n.ry + (vc - n.cy) * .0025; o.x = n.cx; o.y = n.cy; o.pin = 1; // gentle turn as the slot passes
+      return api.force ? Object.assign(o, api.force) : o;
+    }
     let a = A[0], b = A[0], t = 0;
     if (vc >= L.cy) a = b = L;
     else if (vc > A[0].cy) for (let i = 0; i < A.length - 1; i++) {
@@ -608,6 +615,7 @@ export function mountStage(opts = {}) {
     if (tg) {
       const k = primed && !reduced ? 1 - Math.exp(-dt * 6.5) : 1;
       for (const key in cur) cur[key] += (key === 'ry' ? wrapPi(tg.ry - cur.ry) : tg[key] - cur[key]) * k;
+      if (tg.pin) { cur.x = tg.x; cur.y = tg.y; } // phones: stick to the slot exactly, no lag
       primed = true;
     }
     if (!drag.on) { // soft spring home, slightly under-damped so it settles with an ease

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NZT48 Original · The Limitless Pill · Limitless X</title>
 <meta name="description" content="NZT48 Original: a once-daily nootropic capsule with the 750mg NZT-48 Blend. 30, 60 and 90 capsule options.">
-<!-- Stack: Three.js (3d/vendor) · GSAP 3 + ScrollTrigger · Lenis smooth scroll. Hero footage: Pexels (free licence). -->
+<!-- Stack: Three.js (3d/vendor) · GSAP 3 + ScrollTrigger · Lenis smooth scroll. Hero film: assets/nzt48-film-landscape.mp4 + nzt48-film-portrait.mp4. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<script src="./version-switch.js?v=theme2"></script>
+<script src="./version-switch.js?v=theme4"></script>
 <script src="./nzt48-shared.js?v=theme1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -68,17 +68,32 @@ header .btn .arw{width:30px;height:30px}
 .cartbtn.has b{transform:scale(1)}
 
 /* Hero */
-.hero{position:relative;height:100svh;min-height:640px;overflow:hidden;display:flex;align-items:flex-end}
-.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.3) contrast(1.08) brightness(.6)}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--t10_9_8),.2) 0%,rgba(var(--t10_9_8),0) 35%,rgba(var(--t10_9_8),.75) 78%,var(--bg) 100%)}
-.hero .in{position:relative;z-index:2;width:100%;max-width:1440px;margin:0 auto;padding:0 var(--pad) clamp(56px,11vh,120px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:end}
-.hero h1{margin:0;font-size:clamp(34px,5vw,84px);line-height:1.3;text-wrap:balance}
-.hero .side{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
-.rating{display:inline-flex;align-items:center;gap:10px;font:500 14px/1 Inter;color:var(--soft)}
+/* Hero: the film plays clean (no wash over it); one frosted card carries the offer */
+.hero{position:relative;height:100svh;min-height:640px;overflow:hidden;background:#000}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .card{position:absolute;z-index:2;left:50%;bottom:clamp(20px,4vh,40px);width:min(1040px,calc(100vw - 2 * var(--pad)));margin-left:calc(min(1040px,calc(100vw - 2 * var(--pad))) / -2);display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px 32px;padding:18px 18px 18px 28px;border-radius:24px;
+  color:#EDE7DA;background:rgba(14,12,10,.42);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 24px 60px -24px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(18px);animation:heroCard 1s var(--ease) .5s forwards}
+@keyframes heroCard{to{opacity:1;transform:none}}
+.hero .card .txt{display:flex;flex-direction:column;gap:8px;min-width:0}
+.hero .card .titlerow{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.hero .card h1{margin:0;font-size:clamp(18px,1.5vw,24px);line-height:1.3}
+.hero .card p{margin:0;font:400 14px/1.5 Inter;color:inherit;opacity:.82;max-width:52ch}
+.hero .card .from{display:flex;flex-direction:column;align-items:flex-end;font:500 12px/1.3 Inter;letter-spacing:.04em;text-transform:uppercase}
+.hero .card .from b{font:400 clamp(24px,2vw,32px)/1.25 Boldonse,sans-serif;letter-spacing:0;text-transform:none}
+.hero .card .btn{gap:18px}
+.rating{display:inline-flex;flex-direction:column;gap:4px;font:500 12px/1.2 Inter;color:inherit}
+.rating .r1{display:flex;align-items:center;gap:6px}
+.rating .r1 b{font:600 14px/1 Inter}
+.rating .r2{opacity:.75}
 .rating i{display:flex;gap:2px;color:var(--gold)}
+html:not(.film-dark) .hero .card{color:#1C1C21;background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 24px 60px -28px rgba(28,28,33,.35)}
+html:not(.film-dark) .hero{background:#F4F2EE}
+html[data-theme="light"]:not(.film-dark) .hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:34%;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(250,246,238,0) 0%,rgba(250,246,238,.04) 14%,rgba(250,246,238,.13) 28%,rgba(250,246,238,.28) 42%,rgba(250,246,238,.48) 56%,rgba(250,246,238,.7) 70%,rgba(250,246,238,.88) 82%,#FAF6EE 92%,#FAF6EE 100%)}  /* eased (scrim-style) ramp, solid page colour at the edge */
+html.film-dark .hero .rating i{color:#FFD25E}
 
 /* NZT-48 mega strip: outline logo drifting between hero and shop, fading into the black */
-.mega{position:relative;z-index:3;margin-top:-6vh;overflow:hidden;padding:2vh 0;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 30%,#000 70%,transparent),linear-gradient(180deg,transparent,#000 40%,#000 60%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 30%,#000 70%,transparent),linear-gradient(180deg,transparent,#000 40%,#000 60%,transparent);mask-composite:intersect}
+.mega{position:relative;z-index:3;margin-top:0;overflow:hidden;padding:2vh 0;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 30%,#000 70%,transparent),linear-gradient(180deg,transparent,#000 40%,#000 60%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 30%,#000 70%,transparent),linear-gradient(180deg,transparent,#000 40%,#000 60%,transparent);mask-composite:intersect}
 .mega .row{display:flex;gap:5vw;width:max-content;animation:mq 60s linear infinite}
 .mega img{height:clamp(110px,15vw,280px);width:auto;opacity:.06}
 .mega img:nth-child(even){opacity:.03}
@@ -285,9 +300,12 @@ footer .giant{display:block;width:calc(100% - 2 * var(--pad));max-width:1440px;h
   header .in{gap:12px}
   header .logo{height:16px}
   .wide-only{display:none}
-  .hero .in{grid-template-columns:1fr;gap:24px}
+  .hero .card{left:16px;right:16px;width:auto;margin-left:0;bottom:calc(16px + env(safe-area-inset-bottom));padding:18px;grid-template-columns:1fr;gap:14px}
+  .hero .card .from{flex-direction:row;align-items:baseline;gap:8px}
+  .hero .card .btn{justify-content:space-between}
   .cfg{grid-template-columns:1fr;min-height:0}
-  .stage{height:52vh;min-height:340px}
+  .stage{height:58vh;min-height:380px}
+  .stage .anchor{top:5%;bottom:9%;left:2%;right:2%}
   .inside,.faq,.steps{grid-template-columns:1fr}
   .inside .intro,.faq .intro{position:static}
   .shots{height:44vh;order:-1}
@@ -301,7 +319,12 @@ footer .giant{display:block;width:calc(100% - 2 * var(--pad));max-width:1440px;h
   .prism .anchor{left:50%;top:60%;width:52vw;height:52vw}
   #lb .box{grid-template-columns:1fr;overflow:auto}
   #lb .box img{max-height:50svh}
-  .final video{width:min(80vw,380px)}
+  .final{overflow:hidden}
+  .final video{width:155vw;max-width:none;margin:-16vh 0 -10vh}  /* the film frame is mostly empty space around the bottle: crop it */
+  .tokens{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .tok{height:auto;min-height:46px;padding:10px 12px;border-radius:14px;font-size:13.5px;line-height:1.25;text-align:left;align-items:center}
+  .tok::before{flex:none}
+  .hcard{width:100%}
   #cart aside{top:auto;left:0;width:100%;max-height:88svh;border-radius:24px 24px 0 0;transform:translateY(100%);padding-top:12px}
   #cart .grab{display:block;width:44px;height:5px;border-radius:3px;background:var(--line2);margin:0 auto 4px}
   #toast{top:76px;bottom:auto;transform:translate(-50%,calc(-100% - 120px))}
@@ -316,11 +339,10 @@ html[data-theme="light"] header .logo,html[data-theme="light"] footer .wm{conten
 html[data-theme="light"] footer .giant{content:url("assets/nzt48-logo-2026-blue.svg");opacity:.1;-webkit-mask-image:none;mask-image:none}
 html[data-theme="light"] .mega img{content:url("assets/nzt48-logo-2026-outline-lightblue.svg");opacity:.35}
 html[data-theme="light"] .mega img:nth-child(even){opacity:.2}
-html[data-theme="light"] .hero h1{color:var(--gold)}
-html[data-theme="light"] header:not(.up) .logo{content:url("assets/nzt48-logo-2026-white.svg")}
-html[data-theme="light"] header:not(.up) nav a{color:rgba(255,255,255,.88)}
-html[data-theme="light"] header:not(.up) nav a:hover{color:#fff;background:rgba(255,255,255,.14)}
-html[data-theme="light"] header:not(.up) .ibtn{color:#fff;background:rgba(255,255,255,.16)}
+html[data-theme="light"].film-dark header:not(.up) .logo{content:url("assets/nzt48-logo-2026-white.svg")}
+html[data-theme="light"].film-dark header:not(.up) nav a{color:rgba(255,255,255,.88)}
+html[data-theme="light"].film-dark header:not(.up) nav a:hover{color:#fff;background:rgba(255,255,255,.14)}
+html[data-theme="light"].film-dark header:not(.up) .ibtn{color:#fff;background:rgba(255,255,255,.16)}
 html[data-theme="light"] .prism{background:#0D1533;--text:#EDE7DA;--soft:#C9D0EA;color:#EDE7DA}
 html[data-theme="light"] .day::after{background:linear-gradient(180deg,rgba(10,9,8,0) 45%,rgba(10,9,8,.92))}
 html[data-theme="light"] .day .cap b{color:#EDE7DA}
@@ -354,14 +376,15 @@ html[data-theme="light"] .tile.big svg{color:#A9B8FF}</style>
 
 <main>
   <section class="hero" data-section="hero">
-    <video autoplay muted loop playsinline src="https://videos.pexels.com/video-files/11652770/11652770-hd_1920_1080_24fps.mp4"></video>
-    <div class="in">
-      <h1 class="bebas">The Limitless Pill</h1>
-      <div class="side">
-        <p class="lede">NZT48 Original is a once-daily nootropic capsule with the 750mg NZT-48™ Blend. One capsule is the whole serving.*</p>
-        <span class="rating"><i aria-hidden="true" id="stars"></i><span id="ratingtxt">4.9 · 5,100+ reviews</span></span>
-        <a class="btn pri" href="#shop" data-scroll>Build your supply<i class="arw"><svg width="16" height="16"><use href="#arw"/></svg></i></a>
+    <video id="herofilm" autoplay muted loop playsinline preload="auto" aria-label="NZT48 Original brand film"></video>
+    <div class="card">
+      <div class="txt">
+        <div class="titlerow"><h1 class="bebas">NZT48 Original</h1>
+          <span class="rating" aria-label="Rated 4.9 out of 5"><span class="r1"><i aria-hidden="true" id="stars"></i><b id="ratingval">4.9</b></span><span class="r2" id="ratingtxt">5,100+ reviews</span></span></div>
+        <p>The Limitless Pill. A once-daily nootropic capsule with the 750mg NZT-48™ Blend.*</p>
       </div>
+      <span class="from">From<b id="herofrom">$47.96</b></span>
+      <a class="btn pri" href="#shop" data-scroll>Build your supply<i class="arw"><svg width="16" height="16"><use href="#arw"/></svg></i></a>
     </div>
   </section>
 
@@ -490,7 +513,7 @@ html[data-theme="light"] .tile.big svg{color:#A9B8FF}</style>
     <div><h4>Support</h4><a href="../../pages/returns-exchanges/index.html">Returns policy</a><a href="/policies/privacy-policy">Privacy</a><a href="/policies/terms-of-service">Terms</a></div>
     <p class="legal" id="fda"></p>
     <p class="legal" id="warn"></p>
-    <p class="legal">“The Limitless Pill” is a Limitless X campaign name for NZT48 Original. NZT48 is not affiliated with, sponsored by or endorsed by any film, television production, studio or actor. Individual results vary. Hero footage from Pexels. © 2026 Limitless X</p>
+    <p class="legal">“The Limitless Pill” is a Limitless X campaign name for NZT48 Original. NZT48 is not affiliated with, sponsored by or endorsed by any film, television production, studio or actor. Individual results vary. © 2026 Limitless X</p>
   </div>
   <img class="giant" src="assets/nzt48-logo-2026.svg" alt="" aria-hidden="true">
 </footer>
@@ -554,7 +577,19 @@ document.addEventListener('click', e => { const a = e.target.closest('[data-scro
 
 const hdr = $('#hdr');
 ScrollTrigger.create({ start: 30, end: 'max', onToggle: s => hdr.classList.toggle('up', s.isActive) });
-gsap.to('.hero video', { yPercent: 14, scale: 1.06, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+/* Hero film: landscape cut on wide screens, portrait cut on tall ones */
+const film = $('#herofilm'), filmMQ = matchMedia('(max-aspect-ratio: 4/5), (max-width: 760px)');
+// light theme uses the white cuts
+const FILMS = { dark: { landscape: 'landscape', portrait: 'portrait' }, light: { landscape: 'landscape-white', portrait: 'portrait-white' } };
+const pickFilm = () => {
+  const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark', shape = filmMQ.matches ? 'portrait' : 'landscape';
+  const name = FILMS[theme][shape] || FILMS.dark[shape], src = 'assets/nzt48-film-' + name + '.mp4';
+  document.documentElement.classList.toggle('film-dark', !name.endsWith('white'));
+  if (!film.src.endsWith(src)) { film.src = src; film.play().catch(() => {}); }
+};
+pickFilm(); filmMQ.addEventListener('change', pickFilm);
+new MutationObserver(pickFilm).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+// hero film plays untouched: no filter, no zoom, no parallax
 const lock = on => lenis && (on ? lenis.stop() : lenis.start());
 
 /* NZT-48 mega strip: drifts on its own and leans with the scroll */
@@ -740,7 +775,8 @@ measure(); addEventListener('resize', measure); imgs[0].addEventListener('load',
 const wrap = v => ((v % total) + total) % total;
 function place() { // every card sits at its slot plus the shared offset, wrapped so the loop never ends
   cards.forEach((c, i) => {
-    const x = wrap(i * step + car.x + step) - step + startX;
+    const lead = Math.ceil((startX + cards[0].offsetWidth) / step) * step; // wrap point sits fully off-screen on the left, so no card vanishes in view
+    const x = wrap(i * step + car.x + lead) - lead + startX;
     c.style.transform = `translate3d(${x}px,0,0)`;
     const n = (x + step / 2) / innerWidth - .5; imgs[i].style.transform = `translate3d(${(-n * 7).toFixed(2)}%,0,0)`; // depth: photos drift against the card
   });
@@ -803,7 +839,8 @@ addEventListener('keydown', e => {
 /* ---------- FAQ ---------- */
 $('#qs').innerHTML = D.faq.map((f, i) => `<details${i === 0 ? ' open' : ''}><summary>${f[0]}<i aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 1v10M1 6h10"/></svg></i></summary><p>${f[1]}</p></details>`).join('');
 $('#fda').textContent = D.fda; $('#warn').textContent = 'Warning: ' + D.warning;
-$('#ratingtxt').textContent = `${D.reviews.rating} · ${D.reviews.count} reviews`;
+$('#ratingtxt').textContent = `${D.reviews.count} reviews`; $('#ratingval').textContent = D.reviews.rating;
+$('#herofrom').textContent = N.money(N.calc('30', 'sub', 30).total);
 
 /* Gentle entrance for each section's content, from an already-visible state */
 $$('.sec').forEach(s => gsap.from(s.children, { y: 28, opacity: .001, duration: 1, ease: 'expo.out', stagger: .08, scrollTrigger: { trigger: s, start: 'top 82%', once: true } }));
@@ -919,7 +956,8 @@ gsap.ticker.add(() => {
       a.root.rotation.set(.06, (reduce ? 0 : t * .25) + spin, 0);
       const n = stageCount;
       a.root.children.forEach((b, i) => { // bottles slide into place or shrink away as the size changes
-        const on = i < n, d = i - (n - 1) / 2, s = on ? (n === 1 ? .66 : n === 2 ? .6 : .54) : .001;
+        const m = innerWidth < 900 ? 1.3 : 1; // phones: bottles fill the stage
+        const on = i < n, d = i - (n - 1) / 2, s = on ? (n === 1 ? .66 : n === 2 ? .6 : .54) * m : .001;
         b.position.lerp(tmp.set(on ? d * .4 : 0, 0, on ? -Math.abs(d) * .22 : -.4), .12);
         b.rotation.y += ((on ? d * .28 : 0) - b.rotation.y) * .12;
         b.scale.setScalar(b.scale.x + (s * b.userData.u - b.scale.x) * .12);

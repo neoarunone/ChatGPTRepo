@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
-<script src="./version-switch.js?v=theme2"></script>
+<script src="./version-switch.js?v=theme4"></script>
 </head>
 <body>
 <x-dc>
@@ -33,6 +33,12 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 @keyframes dd-run{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .dd-row{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:18px;width:100%;cursor:pointer;padding:6px 0;font-family:Boldonse,Poppins,sans-serif;text-transform:uppercase;line-height:1.3;transition:color .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1)}
 .dd-row:focus-visible{outline:2px solid var(--cF4C430);outline-offset:6px;border-radius:4px}
+/* Phones: tighter rhythm, and bottle slots sized to the (larger) bottle instead of a full screen */
+@media (max-width:819px){
+  [data-screen-label] > div:first-child{padding-top:40px!important;padding-bottom:40px!important}
+  [data-nzt-anchor="hero-m"]{height:min(100vw,440px)!important}
+  [data-nzt-anchor="serving"],[data-nzt-anchor="final"]{height:min(106vw,450px)!important;min-height:0!important}
+}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
 </style>
 </helmet>
@@ -590,7 +596,7 @@ class Component extends DCLogic {
     // Fit the footer wordmark's viewBox to its actual glyph box so it spans the content width edge to edge.
     const fitMark = () => { const svg = document.querySelector('[data-wordmark]'); if (!svg) return; const t = svg.querySelector('text'), g = document.createElement('canvas').getContext('2d'); g.font = '200px Boldonse'; const m = g.measureText('LIMITLESS'); const l = m.actualBoundingBoxLeft, w = l + m.actualBoundingBoxRight, a = m.actualBoundingBoxAscent, d = m.actualBoundingBoxDescent; if (!(w > 0 && a > 0)) return; t.setAttribute('x', String(l)); svg.setAttribute('viewBox', '0 ' + (-a).toFixed(2) + ' ' + w.toFixed(2) + ' ' + (a + d).toFixed(2)); };
     (document.fonts ? document.fonts.load('200px Boldonse').then(fitMark, fitMark) : Promise.resolve()).then(fitMark); setTimeout(fitMark, 1500);
-    import('./3d/nzt-stage.js?v=v2-20261017e').then(m => { if (!this._dead) this._stage = m.mountStage({ base: './3d/' }); }).catch(e => console.warn('NZT stage failed to load', e));
+    import('./3d/nzt-stage.js?v=v2-20261017g').then(m => { if (!this._dead) this._stage = m.mountStage({ base: './3d/' }); }).catch(e => console.warn('NZT stage failed to load', e));
   }
   componentWillUnmount() {
     this._dead = true;
